@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 //import Cookies from 'js-cookie'
 import Admin from '../views/admin/Dashboard.vue'
+import AdminTemplate from '../views/admin/AdminTemplate.vue'
+import UserManagement from '../views/admin/UserManagement.vue'
+import Register from '../views/admin/Register.vue'
 import Peneliti from '../views/peneliti/Dashboard.vue'
 import Operator from '../views/operator/Dashboard.vue'
 import Login from '../views/Login.vue'
@@ -16,8 +19,18 @@ Vue.use(VueRouter)
   },
   {
     path: '/admin',
-    name: 'Admin',
-    component: Admin,
+    component: AdminTemplate,
+    children: [
+      {path: '',
+      component: Admin,
+      meta: {requiresAuth: true}},
+      {path: 'usermanagement',
+      component: UserManagement,
+      meta: {requiresAuth: true}},
+      {path: 'register',
+      component: Register,
+      meta: {requiresAuth: true}}
+    ],
     meta: {requiresAuth: true}
   },
   {
@@ -49,11 +62,13 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+  //console.log(to)
   if(to.meta.requiresAuth){
     const authUser = JSON.parse(window.localStorage.getItem('authUser'))
     if(authUser && authUser.access_token){
       next()
-    }else(next({name: 'Login'}))
+    }else{
+      (next({name: 'Login'}))}
   }
   next()
 })

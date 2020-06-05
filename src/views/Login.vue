@@ -87,15 +87,15 @@ export default{
       axios.post(loginUrl,postData)
         .then(response => {
           if (response.status === 200){
-            console.log('Oauth token', response)
+            //console.log('Oauth token', response)
             authUser.access_token = response.data.access_token
             window.localStorage.setItem('authUser', JSON.stringify(authUser))
             axios.get(userUrl, {headers: getHeader()})
               .then(response =>{
-                console.log('user object', response)
+                //console.log('user object', response)
                 authUser.id_role = response.data.id_role
                 window.localStorage.setItem('role', JSON.stringify(authUser.id_role))
-                this.$router.push('/admin')
+                //this.$router.push('/admin')
                 if(authUser.id_role === 1){
                   this.$router.push('/admin')
                 }

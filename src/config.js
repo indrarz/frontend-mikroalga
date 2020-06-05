@@ -1,6 +1,7 @@
 export const apiDomain = 'http://127.0.0.1:8000/'
 export const loginUrl = apiDomain + 'api/auth/login'
 export const userUrl = apiDomain + 'api/auth/me'
+export const usersUrl = apiDomain + 'api/users'
 
 export const getHeader = function(){
     const tokenData = JSON.parse(window.localStorage.getItem('authUser'))
