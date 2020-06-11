@@ -29,20 +29,34 @@
     
                   </div>
                   <div class="card-body">
-                    <router-link to="/admin/register">register</router-link>
+                    <div class="row">
+                      <div class="col-2">
+                                            <router-link to="/admin/register"><button type="button" class="btn btn-block btn-primary">Registrasi Akun</button></router-link>
+
+                      </div>
+                    </div>
+                    <br/>
                     <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                       <th>Nama</th>
                                       <th>Email</th>
                                       <th>Role</th>
+                                      <th>Status</th>
+                                      <th>Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                       <tr v-for="data in data.data" :key="data.id">
                                       <td>{{data.nama}}</td>
                                       <td>{{data.email}}</td>
-                                      <td>{{data.id_role}}</td>
+                                      <td v-if="data.id_role === 1">Admin</td>
+                                      <td v-else-if="data.id_role === 2">Peneliti</td>
+                                      <td v-else-if="data.id_role === 3">Operator</td>
+                                      <td v-if="data.deleted_at === null">Aktif</td>
+                                      <td v-else>Nonaktif</td>
+                                      <td v-if="data.deleted_at === null"><button type="button" class="btn btn-block btn-danger btn-sm" @click="deleteUser(data.id)">Nonaktifkan Akun</button></td>
+                                      <td v-else><button type="button" class="btn btn-block btn-success btn-sm" @click="restoreUser(data.id)">Aktifkan Akun</button></td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -80,12 +94,22 @@ export default {
          axios.get(usersUrl, {headers: getHeader()})
             .then(function (response) {
             app.data = response.data;
-            //console.log(app.users)
+            //console.log(app.data);
         })
         .catch(function (error) {
             console.log(error.message);
         });
 
+      },
+      deleteUser: function(key){
+        //window.console.log('id delete' + key)
+        const delUrl = usersUrl + '/' + key;
+        axios.delete(delUrl, {headers: getHeader()});
+      },
+      restoreUser: function(key){
+        //window.console.log('id delete' + key)
+        const resUrl = usersUrl + '/' + key + '/restore';
+        axios.put(resUrl, key, {headers: getHeader()});
       }
 
     },

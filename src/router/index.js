@@ -5,7 +5,12 @@ import Admin from '../views/admin/Dashboard.vue'
 import AdminTemplate from '../views/admin/AdminTemplate.vue'
 import UserManagement from '../views/admin/UserManagement.vue'
 import Register from '../views/admin/Register.vue'
+import Mikroalga from '../views/admin/Mikroalga.vue'
+import Kolam from '../views/admin/Kolam.vue'
+import PenelitiTemplate from '../views/peneliti/PenelitiTemplate.vue'
 import Peneliti from '../views/peneliti/Dashboard.vue'
+import LogDataPeneliti from '../views/peneliti/LogData.vue'
+import Perizinan from '../views/peneliti/Perizinan.vue'
 import Operator from '../views/operator/Dashboard.vue'
 import Login from '../views/Login.vue'
 
@@ -29,14 +34,31 @@ Vue.use(VueRouter)
       meta: {requiresAuth: true}},
       {path: 'register',
       component: Register,
+      meta: {requiresAuth: true}},
+      {path: 'mikroalga',
+      component: Mikroalga,
+      meta: {requiresAuth: true}},
+      {path: 'kolam',
+      component: Kolam,
       meta: {requiresAuth: true}}
+      
     ],
     meta: {requiresAuth: true}
   },
   {
     path: '/peneliti',
-    name: 'Peneliti',
-    component: Peneliti,
+    component: PenelitiTemplate,
+    children: [
+      {path: '',
+      component: Peneliti,
+      meta: {requiresAuth: true}},
+      {path: 'logdata',
+      component: LogDataPeneliti,
+      meta: {requiresAuth: true}},
+      {path: 'perizinan',
+      component: Perizinan,
+      meta: {requiresAuth: true}}
+    ],
     meta: {requiresAuth: true}
   },
   {

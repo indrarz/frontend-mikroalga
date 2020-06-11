@@ -35,7 +35,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3>27.71°C</h3>
+                            <h3 v-for="datas in datas.data" :key="datas.id">{{datas.suhu_air}}</h3>
             
                             <p>Suhu</p>
                           </div>
@@ -46,9 +46,9 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                           <div class="inner">
-                            <h3>53 RH</h3>
+                            <!--<h3>{{data.pH_air}}</h3>-->
             
-                            <p>Kelembapan</p>
+                            <p>pH</p>
                           </div>
                         </div>
                       </div>
@@ -57,9 +57,9 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <h3>984.54</h3>
+                            <!--<h3>{{data.intensitas_cahaya}}</h3>-->
             
-                            <p>Tekanan</p>
+                            <p>Intensitas Cahaya</p>
                           </div>
                         </div>
                       </div>
@@ -68,29 +68,27 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <h3>241.83</h3>
+                            <!--<h3>{{data.ketinggian_air}}</h3>-->
             
-                            <p>Ketinggian</p>
+                            <p>Ketinggian Air</p>
                           </div>
                         </div>
                       </div>
                       <!-- ./col -->
                     </div>
                     <br/>
-                    <dl class="row">
+                    <!--<dl class="row">
                         <dt class="col-sm-4">Tanggal Panen Terakhir</dt>
                         <dd class="col-sm-8">29 Januari 2020</dd>
-                        <dt class="col-sm-4">pH</dt>
-                        <dd class="col-sm-8">8.3</dd>
                         <dt class="col-sm-4">Kekeruhan</dt>
-                        <dd class="col-sm-8">10 NTU</dd>
+                        <dd class="col-sm-8">{{data.kekeruhan}}</dd>
                         <dt class="col-sm-4">Kecepatan Air</dt>
-                        <dd class="col-sm-8">30 cm<sup>3</sup>/s</dd>
+                        <dd class="col-sm-8">{{data.kecepatan_air}} cm<sup>3</sup>/s</dd>
                         <dt class="col-sm-4">Kecepatan Udara</dt>
-                        <dd class="col-sm-8">40 cm/s</dd>
+                        <dd class="col-sm-8">{{data.aliran_udara}} cm/s</dd>
                         <dt class="col-sm-4">Energi</dt>
-                        <dd class="col-sm-8">3.3 W</dd>
-                    </dl>
+                        <dd class="col-sm-8">{{data.energi_listrik}} W</dd>
+                    </dl>-->
                   </div>
                   <!-- /.card-body-->
                 </div>
@@ -103,3 +101,40 @@
     </section>
   </div>
 </template>
+
+<script>
+import {getHeader, produksiUrl} from '../../config'
+import axios from 'axios'
+export default {
+
+    data: function () {
+        return {
+          datas: []
+        }
+    },
+
+    methods: {
+
+      getOutput: function() {
+
+        var app = this;
+        const outputUrl = produksiUrl+'/1/output_sensor/latest'
+         axios.get(outputUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.datas = response.data;
+            console.log(app.datas);
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+
+      }
+
+    },
+
+    created() {
+      this.getOutput();
+    }
+
+    }
+</script>

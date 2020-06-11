@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-green navbar-dark">
     <!-- Left navbar links -->
@@ -42,7 +43,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a href="#" class="d-block">ADMIN</a>
+          <a href="#" class="d-block">PENELITI</a>
         </div>
       </div>
 
@@ -52,28 +53,28 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
          <li class="nav-item">
-                <router-link to="/admin" class="nav-link">
+                <a href="/peneliti" class="nav-link">
                  <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
-                </router-link>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="izin.html" class="nav-link">
+                  <i class="nav-icon far fa-list-alt active"></i>
+                  <p>Daftar Izin Akses</p>
+                </a>
               </li>
         <li class="nav-item">
-                <router-link to="/admin/usermanagement" class="nav-link">
-                  <i class="nav-icon fas fa-clipboard"></i>
-                  <p>Registrasi User</p>
-                </router-link>
-              </li>
-        <li class="nav-item">
-                <router-link to="/admin/mikroalga" class="nav-link">
+                <a href="panen.html" class="nav-link">
                  <i class="nav-icon fab fa-envira"></i>
-                  <p>Data Mikroalga</p>
-                </router-link>
+                  <p>Pemanenan</p>
+                </a>
               </li>
         <li class="nav-item">
-                <router-link to="/admin/kolam" class="nav-link">
-                 <i class="nav-icon fas fa-tint"></i>
-                  <p>Data Kolam</p>
-                </router-link>
+          <router-link to="/peneliti/logdata" class="nav-link">
+                 <i class="nav-icon fas fa-receipt"></i>
+                  <p>Log Data</p>
+          </router-link>
               </li>
         </ul>
       </nav>
@@ -81,7 +82,9 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-<router-view></router-view>
+
+  <!-- Content Wrapper. Contains page content -->
+<router-view></router-view>>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong>Copyright &copy;2020 Ilmu Komputer IPB.</strong>
@@ -102,7 +105,7 @@
 import {getHeader, apiDomain, userUrl} from '../../config'
 import axios from 'axios'
 export default {
-      data: function () {
+        data: function () {
         return {
           datas: []
         }
@@ -113,7 +116,6 @@ export default {
       axios.get(logoutUrl,{headers: getHeader()})
       .then(response =>{
         window.localStorage.removeItem('authUser');
-        window.localStorage.removeItem('role');
         console.log(response);
         this.$router.push('/')
       })

@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-green navbar-dark">
     <!-- Left navbar links -->
@@ -15,7 +16,7 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <span v-for="data in datas" :key="data.id">{{data.nama}}</span>
+          <span>Operator</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a style="cursor: pointer;" @click="logout" class="dropdown-item">
@@ -34,6 +35,7 @@
   <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
     <a href="home.html" class="brand-link navbar-success">
+     
       <span class="brand-text font-weight-light">Smart Algae Pond</span>
     </a>
 
@@ -42,7 +44,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a href="#" class="d-block">ADMIN</a>
+          <a href="#" class="d-block">OPERATOR</a>
         </div>
       </div>
 
@@ -52,28 +54,22 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
          <li class="nav-item">
-                <router-link to="/admin" class="nav-link">
+                <a href="home.html" class="nav-link active">
                  <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
-                </router-link>
+                </a>
               </li>
         <li class="nav-item">
-                <router-link to="/admin/usermanagement" class="nav-link">
-                  <i class="nav-icon fas fa-clipboard"></i>
-                  <p>Registrasi User</p>
-                </router-link>
-              </li>
-        <li class="nav-item">
-                <router-link to="/admin/mikroalga" class="nav-link">
+                <a href="panen.html" class="nav-link">
                  <i class="nav-icon fab fa-envira"></i>
-                  <p>Data Mikroalga</p>
-                </router-link>
+                  <p>Pemanenan</p>
+                </a>
               </li>
         <li class="nav-item">
-                <router-link to="/admin/kolam" class="nav-link">
-                 <i class="nav-icon fas fa-tint"></i>
-                  <p>Data Kolam</p>
-                </router-link>
+                <a href="riwayat.html" class="nav-link">
+                 <i class="nav-icon fas fa-receipt"></i>
+                  <p>Log Data</p>
+                </a>
               </li>
         </ul>
       </nav>
@@ -82,7 +78,6 @@
     <!-- /.sidebar -->
   </aside>
 <router-view></router-view>
-  <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong>Copyright &copy;2020 Ilmu Komputer IPB.</strong>
     All rights reserved.
@@ -99,40 +94,19 @@
 </template>
 
 <script>
-import {getHeader, apiDomain, userUrl} from '../../config'
+import {getHeader, apiDomain} from '../../config'
 import axios from 'axios'
 export default {
-      data: function () {
-        return {
-          datas: []
-        }
-    },
   methods:{
     logout: function(){
       const logoutUrl = apiDomain+'api/auth/logout';
       axios.get(logoutUrl,{headers: getHeader()})
       .then(response =>{
         window.localStorage.removeItem('authUser');
-        window.localStorage.removeItem('role');
         console.log(response);
         this.$router.push('/')
       })
-    },
-    getMe: function(){
-      var app = this;
-
-         axios.get(userUrl, {headers: getHeader()})
-            .then(function (response) {
-            app.datas = response;
-            //console.log(app.datas);
-        })
-        .catch(function (error) {
-            console.log(error.message);
-        });
     }
-  },
-  created(){
-    this.getMe();
   }
 }
 </script>
