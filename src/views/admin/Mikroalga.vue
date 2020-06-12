@@ -207,7 +207,7 @@ export default {
          axios.get(mikroalgaUrl, {headers: getHeader()})
             .then(function (response) {
             app.mikroalga = response.data;
-            console.log(response.data);
+            //console.log(response.data);
         })
         .catch(function (error) {
             console.log(error.message);

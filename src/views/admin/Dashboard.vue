@@ -36,7 +36,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3 v-for="data in data.data" :key="data.id">{{data.suhu_air}}</h3>
+                            <h3>{{suhu_air}}</h3>
             
                             <p>Suhu</p>
                           </div>
@@ -47,7 +47,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                           <div class="inner">
-                            <!--<h3>{{data.pH_air}}</h3>-->
+                            <h3>{{ph_air}}</h3>
             
                             <p>pH</p>
                           </div>
@@ -58,7 +58,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <!--<h3>{{data.intensitas_cahaya}}</h3>-->
+                            <h3>{{intensitas_cahaya}}</h3>
             
                             <p>Intensitas Cahaya</p>
                           </div>
@@ -69,7 +69,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <!--<h3>{{data.ketinggian_air}}</h3>-->
+                            <h3>{{ketinggian_air}}</h3>
             
                             <p>Ketinggian Air</p>
                           </div>
@@ -82,13 +82,13 @@
                         <dt class="col-sm-4">Tanggal Panen Terakhir</dt>
                         <dd class="col-sm-8">29 Januari 2020</dd>
                         <dt class="col-sm-4">Kekeruhan</dt>
-                        <dd class="col-sm-8" v-for="data in data.data" :key="data.id">{{data.kekeruhan}}</dd>
+                        <dd class="col-sm-8">{{kekeruhan}}</dd>
                         <dt class="col-sm-4">Kecepatan Air</dt>
-                        <dd class="col-sm-8"> cm<sup>3</sup>/s</dd>
+                        <dd class="col-sm-8">{{kecepatan_air}} cm<sup>3</sup>/s</dd>
                         <dt class="col-sm-4">Kecepatan Udara</dt>
-                        <dd class="col-sm-8"> cm/s</dd>
+                        <dd class="col-sm-8">{{aliran_udara}} cm/s</dd>
                         <dt class="col-sm-4">Energi</dt>
-                        <dd class="col-sm-8"> W</dd>
+                        <dd class="col-sm-8">{{energi_listrik}} W</dd>
                     </dl>
                   </div>
                   <!-- /.card-body-->
@@ -110,7 +110,14 @@ export default {
 
     data: function () {
         return {
-          data: []
+          suhu_air: '',
+          ph_air: '',
+          intensitas_cahaya: '',
+          ketinggian_air: '',
+          kekeruhan: '',
+          kecepatan_air: '',
+          aliran_udara: '',
+          energi_listrik: ''
         }
     },
 
@@ -120,14 +127,24 @@ export default {
 
         var app = this;
         const outputUrl = produksiUrl+'/1/output_sensor/latest'
-         axios.get(outputUrl, {headers: getHeader()})
+        setInterval(() => {
+          axios.get(outputUrl, {headers: getHeader()})
             .then(function (response) {
-            app.data = response.data.data;
+            app.suhu_air = response.data.data.suhu_air;
+            app.ph_air = response.data.data.ph_air;
+            app.intensitas_cahaya = response.data.data.intensitas_cahaya;
+            app.ketinggian_air = response.data.data.ketinggian_air;
+            app.kekeruhan = response.data.data.kekeruhan;
+            app.kecepatan_air = response.data.data.kecepatan_air;
+            app.aliran_udara = response.data.data.aliran_udara;
+            app.energi_listrik = response.data.data.energi_listrik;
             //console.log(app.data);
         })
         .catch(function (error) {
             console.log(error.message);
         });
+          
+        }, 3000);
 
       }
 
