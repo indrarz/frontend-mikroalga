@@ -30,12 +30,13 @@
     
                   </div>
                   <div class="card-body">
+                    
                     <div class="row">
                       <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3 v-for="datas in datas.data" :key="datas.id">{{datas.suhu_air}}</h3>
+                            <h3 v-for="data in data.data" :key="data.id">{{data.suhu_air}}</h3>
             
                             <p>Suhu</p>
                           </div>
@@ -77,18 +78,18 @@
                       <!-- ./col -->
                     </div>
                     <br/>
-                    <!--<dl class="row">
+                    <dl class="row">
                         <dt class="col-sm-4">Tanggal Panen Terakhir</dt>
                         <dd class="col-sm-8">29 Januari 2020</dd>
                         <dt class="col-sm-4">Kekeruhan</dt>
-                        <dd class="col-sm-8">{{data.kekeruhan}}</dd>
+                        <dd class="col-sm-8" v-for="data in data.data" :key="data.id">{{data.kekeruhan}}</dd>
                         <dt class="col-sm-4">Kecepatan Air</dt>
-                        <dd class="col-sm-8">{{data.kecepatan_air}} cm<sup>3</sup>/s</dd>
+                        <dd class="col-sm-8"> cm<sup>3</sup>/s</dd>
                         <dt class="col-sm-4">Kecepatan Udara</dt>
-                        <dd class="col-sm-8">{{data.aliran_udara}} cm/s</dd>
+                        <dd class="col-sm-8"> cm/s</dd>
                         <dt class="col-sm-4">Energi</dt>
-                        <dd class="col-sm-8">{{data.energi_listrik}} W</dd>
-                    </dl>-->
+                        <dd class="col-sm-8"> W</dd>
+                    </dl>
                   </div>
                   <!-- /.card-body-->
                 </div>
@@ -109,7 +110,7 @@ export default {
 
     data: function () {
         return {
-          datas: []
+          data: []
         }
     },
 
@@ -121,8 +122,8 @@ export default {
         const outputUrl = produksiUrl+'/1/output_sensor/latest'
          axios.get(outputUrl, {headers: getHeader()})
             .then(function (response) {
-            app.datas = response.data;
-            console.log(app.datas);
+            app.data = response.data.data;
+            //console.log(app.data);
         })
         .catch(function (error) {
             console.log(error.message);

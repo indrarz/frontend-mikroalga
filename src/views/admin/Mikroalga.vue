@@ -106,6 +106,7 @@
                           <input type="text" class="form-control"  v-model="data.ph_optimal">
                       </div>
                   </div>
+                  <input type='hidden' v-model="data.id">
                   <div class="form-group">
                       <label>Intensitas Cahaya Optimal</label>
                       <div class="col-sm-10">
@@ -233,7 +234,8 @@ export default {
               ph_optimal: this.data.ph_optimal,
               intensitas_cahaya_optimal: this.data.intensitas_cahaya_optimal
           }
-          axios.put(mikroalgaUrl, editData, {headers: getHeader()})
+          var editUrl = mikroalgaUrl + '/' + this.data.id
+          axios.put(editUrl, editData, {headers: getHeader()})
           .then(response =>{
               console.log(response);
           })
