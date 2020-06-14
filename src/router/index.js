@@ -11,6 +11,7 @@ import PenelitiTemplate from '../views/peneliti/PenelitiTemplate.vue'
 import Peneliti from '../views/peneliti/Dashboard.vue'
 import LogDataPeneliti from '../views/peneliti/LogData.vue'
 import Perizinan from '../views/peneliti/Perizinan.vue'
+import Produksi from '../views/peneliti/Produksi.vue'
 import Operator from '../views/operator/Dashboard.vue'
 import Login from '../views/Login.vue'
 
@@ -57,6 +58,9 @@ Vue.use(VueRouter)
       meta: {requiresAuth: true}},
       {path: 'perizinan',
       component: Perizinan,
+      meta: {requiresAuth: true}},
+      {path: 'produksi',
+      component: Produksi,
       meta: {requiresAuth: true}}
     ],
     meta: {requiresAuth: true}

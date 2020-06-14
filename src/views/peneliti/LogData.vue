@@ -38,22 +38,19 @@
                     </h3>
                   </div>
                   <div class="card-body">
-                        <div class="form-group">
-                                <label>Masukkan Jangka Waktu</label>
-              
-                                <div class="input-group">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                  </div>
-                                  <input type="text" class="form-control float-right" id="reservationtime">
-                                </div>
-                                <!-- /.input group -->
-                              </div>
                     <div class="form-group">
                         <label>Pilih Kolam</label>
                         <select class="form-control">
                           <option value="" disabled selected>Silakan Pilih</option>
-                          <option v-for="kolam in kolam.data" :key="kolam.id" @click="getLog(kolam.id)">{{kolam.nama_kolam}}</option>
+                          <option v-for="kolam in kolam.data" :key="kolam.id" @click="getProduksi(kolam.id)">{{kolam.nama_kolam}}</option>
+                          <!--<option value="3  ">Operator</option>-->
+                        </select>
+                      </div>
+                      <div class="form-group" v-if="isHidden === false">
+                        <label>Pilih Produksi</label>
+                        <select class="form-control">
+                          <option value="" disabled selected>Silakan Pilih</option>
+                          <option v-for="prod in prod" :key="prod.id" @click="getLog(prod.id)">Produksi {{prod.id}}</option>
                           <!--<option value="3  ">Operator</option>-->
                         </select>
                       </div>
@@ -87,7 +84,7 @@
                   </div>
                   <!-- /.card-body-->
                   <div class="card-footer">
-                    <button type="button" class="btn btn-primary" @click="getKolam"><i class="fas fa-download"></i> Unduh Semua Log Data</button>
+                    <button type="button" class="btn btn-primary" @click="downloadLog(link.link)"><i class="fas fa-download"></i> Unduh Semua Log Data</button>
                   </div>
                 </div>
                 <!-- /.card -->
@@ -109,7 +106,10 @@ export default {
     data: function () {
         return {
           data: [],
-          kolam: []
+          kolam: [],
+          prod: [],
+          link: '',
+          isHidden: true
         }
     },
 
@@ -122,21 +122,44 @@ export default {
           //console.log(app.kolam)
         })
       },
+      getProduksi: function(key){
+        var app = this;
+        var prodUrl = kolamUrl + '/' + key + '/produksi';
+        axios.get(prodUrl, {headers: getHeader()})
+        .then(function(response){
+          app.prod=response.data.data;
+          app.isHidden=false;
+          //console.log(app.prod)
+        })
+      },
 
       getLog: function(key) {
 
         var app = this;
         var logUrl = produksiUrl + '/' + key + '/output_sensor'
+        var downloadUrl = logUrl + '/download'
 
          axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
             app.data = response.data;
-            console.log(app.data)
+            //console.log(app.data)
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+        axios.get(downloadUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.link = response.data;
+            //console.log(app.link)
         })
         .catch(function (error) {
             console.log(error.message);
         });
 
+
+      },
+      downloadLog: function(key){
+        window.location.assign(key)
       }
 
     },

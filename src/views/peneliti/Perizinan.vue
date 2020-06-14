@@ -34,53 +34,26 @@
                       <tr>
                         <th>Nama</th>
                         <th>Email</th>
+                        <th>Nama Aksi</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>Fulan</td>
-                        <td>fulanalfulana@gmail.com
+                      <tr v-for="(list, index) in list.data" :key="list.id">
+                        <td>{{user[index*2]}}</td>
+                        <td>{{user[(index*2)+1]}}</td>
+                        <td v-if="list.id_aksi === 1101">Unduh Log Sensor</td>
+                        <td v-else-if="list.id_aksi === 2501">Pemberian Nutrisi</td>
+                        <td v-else-if="list.id_aksi === 2502">Pemanenan</td>
+                        <td v-if="list.approved === null">Pending</td>
+                        <td v-else-if="list.approved === true">Diizinkan</td>
+                        <td v-else-if="list.approved === false">Ditolak</td>
+                        <td v-if="list.approved === null">
+                          <button type="button" class="btn btn-block bg-gradient-success btn-sm" @click="acceptLog(list.id)">Izinkan</button>
+                           <button type="button" class="btn btn-block bg-gradient-danger btn-sm" @click="rejectLog(list.id)">Tolak</button>
                         </td>
-                        <td>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-success">Izinkan</button>
-                            <button type="button" class="btn btn-danger">Tolak</button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Fulan</td>
-                        <td>fulanalfulana@gmail.com
-                        </td>
-                        <td>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-success">Izinkan</button>
-                            <button type="button" class="btn btn-danger">Tolak</button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Fulan</td>
-                        <td>fulanalfulana@gmail.com
-                        </td>
-                        <td>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-success">Izinkan</button>
-                            <button type="button" class="btn btn-danger">Tolak</button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Fulan</td>
-                        <td>fulanalfulana@gmail.com
-                        </td>
-                        <td>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-success">Izinkan</button>
-                            <button type="button" class="btn btn-danger">Tolak</button>
-                          </div>
-                        </td>
+                        <td v-else></td>
                       </tr>
                       </tbody>
                     </table>
@@ -97,3 +70,58 @@
     <!-- /.content -->
   </div>
 </template>
+
+<script>
+import {logaksiUrl, usersUrl, getHeader} from '../../config'
+import axios from 'axios'
+export default {
+  data: function(){
+    return{
+      list: [],
+      user: []
+    }
+  },
+
+  methods: {
+    getLogaksi: function(){
+      var app = this;
+        axios.get(logaksiUrl, {headers: getHeader()})
+        .then(function(response){
+          app.list=response.data;
+          //console.log(app.list.data.length)
+          for (let index = 0; index < app.list.data.length; index++) {
+            var namaUrl = usersUrl + '/' + app.list.data[index].id_user
+            axios.get(namaUrl, {headers: getHeader()})
+            .then(function(response){
+              app.user.push(response.data.data.nama);
+              app.user.push(response.data.data.email);
+              
+              
+            })
+            
+          }
+          //console.log(app.user)
+        })
+    },
+    acceptLog: function(key){
+      //var app = this;
+      var accUrl = logaksiUrl + '/' + key + '/approve'
+      axios.put(accUrl, '', {headers: getHeader()})
+      .then(function(response){
+        console.log(response);
+      })
+    },
+    rejectLog: function(key){
+      //var app = this;
+      var rejectUrl = logaksiUrl + '/' + key + '/approve'
+      axios.put(rejectUrl, '', {headers: getHeader()})
+      .then(function(response){
+        console.log(response);
+      })
+    }
+  },
+  created(){
+    this.getLogaksi();
+  }
+}
+</script>

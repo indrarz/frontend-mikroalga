@@ -6,6 +6,7 @@ export const usersUrl = apiDomain + 'api/users'
 export const produksiUrl = apiDomain + 'api/produksi'
 export const kolamUrl = apiDomain + 'api/kolam'
 export const mikroalgaUrl = apiDomain + 'api/mikroalga'
+export const logaksiUrl = apiDomain + 'api/log_aksi'
 
 export const getHeader = function(){
     const tokenData = JSON.parse(window.localStorage.getItem('authUser'))

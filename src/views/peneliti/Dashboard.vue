@@ -1,19 +1,10 @@
 <template>
+   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
+
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -39,12 +30,13 @@
     
                   </div>
                   <div class="card-body">
+                    
                     <div class="row">
                       <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3>27.71°C</h3>
+                            <h3>{{suhu_air}}</h3>
             
                             <p>Suhu</p>
                           </div>
@@ -55,9 +47,9 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                           <div class="inner">
-                            <h3>53 RH</h3>
+                            <h3>{{ph_air}}</h3>
             
-                            <p>Kelembapan</p>
+                            <p>pH</p>
                           </div>
                         </div>
                       </div>
@@ -66,9 +58,9 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <h3>984.54</h3>
+                            <h3>{{intensitas_cahaya}}</h3>
             
-                            <p>Tekanan</p>
+                            <p>Intensitas Cahaya</p>
                           </div>
                         </div>
                       </div>
@@ -77,9 +69,9 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <h3>241.83</h3>
+                            <h3>{{ketinggian_air}}</h3>
             
-                            <p>Ketinggian</p>
+                            <p>Ketinggian Air</p>
                           </div>
                         </div>
                       </div>
@@ -89,16 +81,14 @@
                     <dl class="row">
                         <dt class="col-sm-4">Tanggal Panen Terakhir</dt>
                         <dd class="col-sm-8">29 Januari 2020</dd>
-                        <dt class="col-sm-4">pH</dt>
-                        <dd class="col-sm-8">8.3</dd>
                         <dt class="col-sm-4">Kekeruhan</dt>
-                        <dd class="col-sm-8">10 NTU</dd>
+                        <dd class="col-sm-8">{{kekeruhan}}</dd>
                         <dt class="col-sm-4">Kecepatan Air</dt>
-                        <dd class="col-sm-8">30 cm<sup>3</sup>/s</dd>
+                        <dd class="col-sm-8">{{kecepatan_air}} cm<sup>3</sup>/s</dd>
                         <dt class="col-sm-4">Kecepatan Udara</dt>
-                        <dd class="col-sm-8">40 cm/s</dd>
+                        <dd class="col-sm-8">{{aliran_udara}} cm/s</dd>
                         <dt class="col-sm-4">Energi</dt>
-                        <dd class="col-sm-8">3.3 W</dd>
+                        <dd class="col-sm-8">{{energi_listrik}} W</dd>
                     </dl>
                   </div>
                   <!-- /.card-body-->
@@ -110,6 +100,59 @@
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
     </section>
-    <!-- /.content -->
   </div>
 </template>
+
+<script>
+import {getHeader, produksiUrl} from '../../config'
+import axios from 'axios'
+export default {
+
+    data: function () {
+        return {
+          suhu_air: '',
+          ph_air: '',
+          intensitas_cahaya: '',
+          ketinggian_air: '',
+          kekeruhan: '',
+          kecepatan_air: '',
+          aliran_udara: '',
+          energi_listrik: ''
+        }
+    },
+
+    methods: {
+
+      getOutput: function() {
+
+        var app = this;
+        const outputUrl = produksiUrl+'/1/output_sensor/latest'
+        setInterval(() => {
+          axios.get(outputUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.suhu_air = response.data.data.suhu_air;
+            app.ph_air = response.data.data.ph_air;
+            app.intensitas_cahaya = response.data.data.intensitas_cahaya;
+            app.ketinggian_air = response.data.data.ketinggian_air;
+            app.kekeruhan = response.data.data.kekeruhan;
+            app.kecepatan_air = response.data.data.kecepatan_air;
+            app.aliran_udara = response.data.data.aliran_udara;
+            app.energi_listrik = response.data.data.energi_listrik;
+            //console.log(app.data);
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+          
+        }, 3000);
+
+      }
+
+    },
+
+    created() {
+      this.getOutput();
+    }
+
+    }
+</script>

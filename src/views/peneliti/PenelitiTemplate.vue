@@ -59,16 +59,16 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="izin.html" class="nav-link">
+                <router-link to="/peneliti/perizinan" class="nav-link">
                   <i class="nav-icon far fa-list-alt active"></i>
                   <p>Daftar Izin Akses</p>
-                </a>
+                </router-link>
               </li>
         <li class="nav-item">
-                <a href="panen.html" class="nav-link">
-                 <i class="nav-icon fab fa-envira"></i>
-                  <p>Pemanenan</p>
-                </a>
+                <router-link to="/peneliti/produksi" class="nav-link">
+                  <i class="nav-icon fab fa-envira"></i>
+                  <p>Produksi</p>
+                </router-link>
               </li>
         <li class="nav-item">
           <router-link to="/peneliti/logdata" class="nav-link">
