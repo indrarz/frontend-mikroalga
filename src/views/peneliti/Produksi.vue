@@ -55,7 +55,7 @@
                         <td>{{prod.waktu_mulai}}</td>
                         <td v-if="prod.waktu_selesai === null">-</td>
                         <td v-else>{{prod.waktu_selesai}}</td>
-                        <td>tes</td>
+                        <td></td>
                       </tr>
                       </tbody>
                     </table>

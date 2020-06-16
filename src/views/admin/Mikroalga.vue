@@ -165,7 +165,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
+              <button type="submit" class="btn btn-primary" @click="hidethis()">Simpan</button>
             </div>
             </form>
           </div>
@@ -221,7 +221,8 @@ export default {
         axios.get(algaUrl, {headers: getHeader()})
             .then(function (response) {
             app.data = response.data.data;
-            console.log(app.data);
+            this.getMikroalga();
+            //console.log(app.data);
         })
         .catch(function (error) {
             console.log(error.message);
@@ -238,6 +239,8 @@ export default {
           axios.put(editUrl, editData, {headers: getHeader()})
           .then(response =>{
               console.log(response);
+              this.getMikroalga();
+              
           })
       },
       addAlga: function(){
@@ -250,7 +253,7 @@ export default {
           axios.post(mikroalgaUrl, addData, {headers: getHeader()})
           .then(response =>{
               console.log(response);
-              this.$emit('close');
+              this.getMikroalga();
           })
       },
       delAlga: function(key){
