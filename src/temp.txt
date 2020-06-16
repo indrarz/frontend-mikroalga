@@ -1,0 +1,54 @@
+/*import 'moment'
+import "./assets/plugins/bootstrap/js/bootstrap.bundle.min.js";
+import "./assets/plugins/chart.js/Chart.min.js";
+import "./assets/plugins/sparklines/sparkline.js";
+import "./assets/plugins/jqvmap/jquery.vmap.min.js";
+import "./assets/plugins/jqvmap/maps/jquery.vmap.usa.js";
+import "./assets/plugins/jquery-knob/jquery.knob.min.js";
+import "./assets/plugins/moment/moment.min.js";
+import "./assets/plugins/daterangepicker/daterangepicker.js";
+import "./assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js";
+import "./assets/plugins/summernote/summernote-bs4.min.js";
+import "./assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js";
+import "./assets/dist/js/adminlte.js";
+import "./assets/dist/js/pages/dashboard.js";
+import "./assets/dist/js/demo.js";
+import postscribe from 'postscribe'
+
+export default{
+  mounted: function(){
+    postscribe('#app', '<script src="./assets/plugins/jquery/jquery.min.js"></script>')
+    postscribe('#app', '<script src="./assets/plugins/jquery-ui/jquery-ui.min.js"></script>')
+    postscribe('#app', '<script src="./assets/plugins/flot/jquery.flot.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/flot-old/jquery.flot.resize.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/flot-old/jquery.flot.pie.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/chart.js/Chart.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/sparklines/sparkline.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/jqvmap/jquery.vmap.min.js"></script>')
+    postscribe('#app', '<script src="./assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/jquery-knob/jquery.knob.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/moment/moment.min.js"></script>')
+    postscribe('#app', '<script src="./assets/plugins/daterangepicker/daterangepicker.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/summernote/summernote-bs4.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/dist/js/adminlte.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/dist/js/pages/dashboard.js"></script>')
+    
+    postscribe('#app', '<script src="./assets/dist/js/demo.js"></script>')
+  }
+}*/

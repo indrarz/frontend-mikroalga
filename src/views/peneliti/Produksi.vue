@@ -55,7 +55,8 @@
                         <td>{{prod.waktu_mulai}}</td>
                         <td v-if="prod.waktu_selesai === null">-</td>
                         <td v-else>{{prod.waktu_selesai}}</td>
-                        <td></td>
+                        <td><button type="button" class="btn btn-block btn-primary btn-sm" @click="doPanen()">Panen</button>
+                          <button type="button" class="btn btn-block btn-success btn-sm" @click="stopPanen()">Tambahkan Nutrisi</button></td>
                       </tr>
                       </tbody>
                     </table>
@@ -115,7 +116,7 @@
 </template>
 
 <script>
-import {getHeader, kolamUrl, mikroalgaUrl, produksiUrl} from '../../config'
+import {getHeader, kolamUrl, mikroalgaUrl, produksiUrl, aksiUrl} from '../../config'
 import axios from 'axios'
 export default {
     data: function(){
@@ -192,6 +193,28 @@ export default {
           id_mikroalga : this.selectedAlga
         }
         axios.post(produksiUrl, addData, {headers: getHeader()})
+        .then(function(response){
+          console.log(response)
+        })
+      },
+      doPanen: function(){
+        const postData ={
+          mode : "manual",
+          manual : "panen:1"
+        }
+        
+        axios.post(aksiUrl, postData, {headers: getHeader()})
+        .then(function(response){
+          console.log(response)
+        })
+      },
+      stopPanen: function(){
+         const postData ={
+          mode : "manual",
+          manual : "panen:0"
+        }
+        
+        axios.post(aksiUrl, postData, {headers: getHeader()})
         .then(function(response){
           console.log(response)
         })
