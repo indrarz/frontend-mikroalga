@@ -55,9 +55,9 @@
                         <td>{{prod.waktu_mulai}}</td>
                         <td v-if="prod.waktu_selesai === null">-</td>
                         <td v-else>{{prod.waktu_selesai}}</td>
-                        <td><button type="button" class="btn btn-block btn-success btn-sm" @click="doPanen()" data-toggle="modal" data-target="#stop-panen">Panen</button>
-                          <button type="button" class="btn btn-block btn-primary btn-sm" @click="doNutrisi()" data-toggle="modal" data-target="#stop-nutrisi">Tambahkan Nutrisi</button>
-                          <button type="button" class="btn btn-block btn-info btn-sm" @click="doAir()" data-toggle="modal" data-target="#stop-air">Tambahkan Air</button></td>
+                        <td><button type="button" class="btn btn-block btn-success btn-sm" @click="doPanen()" data-toggle="modal" data-target="#stop-panen" v-if="bolehPanen === true">Panen</button>
+                          <button type="button" class="btn btn-block btn-primary btn-sm" @click="doNutrisi()" data-toggle="modal" data-target="#stop-nutrisi" v-if="bolehNutrisi === true">Tambahkan Nutrisi</button>
+                          <button type="button" class="btn btn-block btn-info btn-sm" @click="doAir()" data-toggle="modal" data-target="#stop-air" v-if="bolehPanen === true">Tambahkan Air</button></td>
                       </tr>
                       </tbody>
                     </table>
@@ -183,7 +183,7 @@
 </template>
 
 <script>
-import {getHeader, kolamUrl, mikroalgaUrl, produksiUrl, aksiUrl} from '../../config'
+import {getHeader,logaksiUrl, userUrl, kolamUrl, mikroalgaUrl, produksiUrl, aksiUrl} from '../../config'
 import axios from 'axios'
 export default {
     data: function(){
@@ -193,8 +193,11 @@ export default {
             //namakolam: [],
             namaalga: [],
             algas: [],
+            temp: [],
             selectedKolam: '',
-            selectedAlga: ''
+            selectedAlga: '',
+            bolehPanen: null ,
+            bolehNutrisi: null 
         }
     },
 
@@ -238,6 +241,7 @@ export default {
               .then(function(response){
                 app.namakolam.push(response.data.data.nama_kolam)
               })*/
+              this.getPanen(app.prod[index].id)
               axios.get(algaini, {headers: getHeader()})
               .then(function(response){
                 temp.push(response.data.data.nama_spesies)
@@ -329,10 +333,44 @@ export default {
         .then(function(response){
           console.log(response)
         })
-      }
+      },
+      getMe: function(){
+      var app = this;
+
+         axios.get(userUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.me = response.data.id;
+            //console.log(app.me);
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+    },
+      getPanen: function(key){
+      var app = this;
+        axios.get(logaksiUrl, {headers: getHeader()})
+        .then(function(response){
+          app.temp=response.data;
+          //console.log(app.list.data.length)
+          for (let index = 0; index < app.temp.data.length; index++) {
+            if (app.me == app.temp.data[index].id_user && app.temp.data[index].approved == true
+              && app.temp.data[index].id_aksi == 2501 && app.temp.data[index].id_produksi == key) {
+              app.bolehPanen = true;
+              break;
+            } else{
+              app.bolehPanen = false;
+            }
+            //console.log(app.boleh)
+            
+          }
+          //console.log(app.boleh)
+          //console.log(app.user)
+        })
+    }
     },
 
     created(){
+      this.getMe();
         this.getKolam();
         this.getMikroalga();
     }

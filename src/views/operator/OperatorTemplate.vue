@@ -16,7 +16,7 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <span>Operator</span>
+          <span v-for="data in datas" :key="data.id">{{data.nama}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a style="cursor: pointer;" @click="logout" class="dropdown-item">
@@ -35,7 +35,6 @@
   <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
     <a href="home.html" class="brand-link navbar-success">
-     
       <span class="brand-text font-weight-light">Smart Algae Pond</span>
     </a>
 
@@ -54,22 +53,28 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
          <li class="nav-item">
-                <a href="home.html" class="nav-link active">
+                <router-link to="/operator" class="nav-link">
                  <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
-                </a>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/operator/perizinan" class="nav-link">
+                  <i class="nav-icon far fa-list-alt active"></i>
+                  <p>Daftar Izin Akses</p>
+                </router-link>
               </li>
         <li class="nav-item">
-                <a href="panen.html" class="nav-link">
-                 <i class="nav-icon fab fa-envira"></i>
-                  <p>Pemanenan</p>
-                </a>
+                <router-link to="/operator/produksi" class="nav-link">
+                  <i class="nav-icon fab fa-envira"></i>
+                  <p>Produksi</p>
+                </router-link>
               </li>
         <li class="nav-item">
-                <a href="riwayat.html" class="nav-link">
+          <router-link to="/operator/logdata" class="nav-link">
                  <i class="nav-icon fas fa-receipt"></i>
                   <p>Log Data</p>
-                </a>
+          </router-link>
               </li>
         </ul>
       </nav>
@@ -77,7 +82,10 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-<router-view></router-view>
+
+  <!-- Content Wrapper. Contains page content -->
+<router-view></router-view>>
+  <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong>Copyright &copy;2020 Ilmu Komputer IPB.</strong>
     All rights reserved.
@@ -94,9 +102,14 @@
 </template>
 
 <script>
-import {getHeader, apiDomain} from '../../config'
+import {getHeader, apiDomain, userUrl} from '../../config'
 import axios from 'axios'
 export default {
+        data: function () {
+        return {
+          datas: []
+        }
+    },
   methods:{
     logout: function(){
       const logoutUrl = apiDomain+'api/auth/logout';
@@ -106,7 +119,22 @@ export default {
         console.log(response);
         this.$router.push('/')
       })
+    },
+    getMe: function(){
+      var app = this;
+
+         axios.get(userUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.datas = response;
+            //console.log(app.datas);
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
     }
+  },
+  created(){
+    this.getMe();
   }
 }
 </script>

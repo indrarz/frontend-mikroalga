@@ -3,19 +3,6 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Log Data</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Log Data</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -85,7 +72,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form class="form" v-on:submit.prevent="editAlga" method="PUT">
+            <form class="form" method="PUT">
             <div class="modal-body">
               
                   <div class="form-group">
@@ -117,7 +104,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-primary" @click="editAlga()" data-dismiss="modal">Save changes</button>
             </div>
             </form>
           </div>
@@ -134,7 +121,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form class="form" v-on:submit.prevent="addAlga" method="POST">
+            <form class="form" method="POST">
             <div class="modal-body">
               
                   <div class="form-group">
@@ -165,7 +152,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" @click="hidethis()">Simpan</button>
+              <button type="submit" class="btn btn-primary" @click="addAlga()" data-dismiss="modal">Simpan</button>
             </div>
             </form>
           </div>
@@ -237,11 +224,7 @@ export default {
           }
           var editUrl = mikroalgaUrl + '/' + this.data.id
           axios.put(editUrl, editData, {headers: getHeader()})
-          .then(response =>{
-              console.log(response);
-              this.getMikroalga();
-              
-          })
+          this.getMikroalga();
       },
       addAlga: function(){
         const addData = {
@@ -251,10 +234,7 @@ export default {
               intensitas_cahaya_optimal: this.add.intensitas_cahaya_optimal
           }
           axios.post(mikroalgaUrl, addData, {headers: getHeader()})
-          .then(response =>{
-              console.log(response);
-              this.getMikroalga();
-          })
+          this.getMikroalga();
       },
       delAlga: function(key){
         var delUrl = mikroalgaUrl + '/' + key;

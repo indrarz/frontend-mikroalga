@@ -107,17 +107,13 @@ export default {
       //var app = this;
       var accUrl = logaksiUrl + '/' + key + '/approve'
       axios.put(accUrl, '', {headers: getHeader()})
-      .then(function(response){
-        console.log(response);
-      })
+      this.getLogaksi();
     },
     rejectLog: function(key){
       //var app = this;
       var rejectUrl = logaksiUrl + '/' + key + '/approve'
       axios.put(rejectUrl, '', {headers: getHeader()})
-      .then(function(response){
-        console.log(response);
-      })
+      this.getLogaksi();
     }
   },
   created(){

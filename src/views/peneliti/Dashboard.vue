@@ -144,7 +144,7 @@ export default {
             console.log(error.message);
         });
           
-        }, 3000);
+        }, 5000);
 
       }
 

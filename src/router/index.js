@@ -12,7 +12,10 @@ import Peneliti from '../views/peneliti/Dashboard.vue'
 import LogDataPeneliti from '../views/peneliti/LogData.vue'
 import Perizinan from '../views/peneliti/Perizinan.vue'
 import Produksi from '../views/peneliti/Produksi.vue'
+import OperatorTemplate from '../views/operator/OperatorTemplate.vue'
 import Operator from '../views/operator/Dashboard.vue'
+import LogDataOperator from '../views/operator/LogData.vue'
+import ProduksiOperator from '../views/operator/Produksi.vue'
 import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
@@ -67,8 +70,18 @@ Vue.use(VueRouter)
   },
   {
     path: '/operator',
-    name: 'Operator',
-    component: Operator,
+    component: OperatorTemplate,
+    children: [
+      {path: '',
+      component: Operator,
+      meta: {requiresAuth: true}},
+      {path: 'logdata',
+      component: LogDataOperator,
+      meta: {requiresAuth: true}},
+      {path: 'produksi',
+      component: ProduksiOperator,
+      meta: {requiresAuth: true}}
+    ],
     meta: {requiresAuth: true}
   }
   /*{

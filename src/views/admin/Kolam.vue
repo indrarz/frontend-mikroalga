@@ -73,7 +73,7 @@
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
       <!--Edit Kolam Modal-->
-    <div class="modal fade" v-on:submit.prevent="editKolam" id="modal-edit">
+    <div class="modal fade" id="modal-edit">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -96,7 +96,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
+              <button type="submit" class="btn btn-primary" @click="editKolam()" data-dismiss="modal">Simpan</button>
             </div>
             </form>
           </div>
@@ -105,7 +105,7 @@
         <!-- /.modal-dialog -->
       </div>
         <!--Add Kolam Modal-->
-    <div class="modal fade" v-on:submit.prevent="addKolam" id="modal-add">
+    <div class="modal fade" id="modal-add">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -123,12 +123,11 @@
                           <input type="text" class="form-control" v-model="add.nama_kolam">
                       </div>
                   </div>
-                  <input type="hidden" v-model="edit.id">
               
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
+              <button type="submit" class="btn btn-primary" @click="addKolam()" data-dismiss="modal">Simpan</button>
             </div>
             </form>
           </div>
@@ -185,26 +184,19 @@ export default {
           }
           var editUrl = kolamUrl + '/' + this.edit.id
           axios.put(editUrl, editData, {headers: getHeader()})
-          .then(response =>{
-              console.log(response);
-          })
+          this.getKolam();
       },
       addKolam: function(){
         const addData = {
               nama_kolam: this.add.nama_kolam,
           }
           axios.post(kolamUrl, addData, {headers: getHeader()})
-          .then(response =>{
-              console.log(response);
-              //this.$emit('close');
-          })
+          this.getKolam();
       },
       hapusKolam: function(key){
         var delUrl = kolamUrl + '/' + key;
         axios.delete(delUrl, {headers: getHeader()})
-        .then(response =>{
-          console.log(response);
-        })
+        this.getKolam();
       },
       pulihkanKolam: function(){
 

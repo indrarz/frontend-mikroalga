@@ -2,19 +2,6 @@
       <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Log Data</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Log Data</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -54,6 +41,7 @@
                           <!--<option value="3  ">Operator</option>-->
                         </select>
                       </div>
+                      <button type="button" class="btn btn-primary" @click="downloadLog(link.link)" v-if="hideButton === false"><i class="fas fa-download"></i> Unduh Semua Log Data</button>
                               <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -84,7 +72,7 @@
                   </div>
                   <!-- /.card-body-->
                   <div class="card-footer">
-                    <button type="button" class="btn btn-primary" @click="downloadLog(link.link)"><i class="fas fa-download"></i> Unduh Semua Log Data</button>
+                    
                   </div>
                 </div>
                 <!-- /.card -->
@@ -109,7 +97,8 @@ export default {
           kolam: [],
           prod: [],
           link: '',
-          isHidden: true
+          isHidden: true,
+          hideButton: true
         }
     },
 
@@ -142,6 +131,7 @@ export default {
          axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
             app.data = response.data;
+            app.hideButton = false;
             //console.log(app.data)
         })
         .catch(function (error) {

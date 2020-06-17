@@ -105,11 +105,13 @@ export default {
         //window.console.log('id delete' + key)
         const delUrl = usersUrl + '/' + key;
         axios.delete(delUrl, {headers: getHeader()});
+        this.getUsers();
       },
       restoreUser: function(key){
         //window.console.log('id delete' + key)
         const resUrl = usersUrl + '/' + key + '/restore';
         axios.put(resUrl, key, {headers: getHeader()});
+        this.getUsers();
       }
 
     },
