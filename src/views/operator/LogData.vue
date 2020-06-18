@@ -56,7 +56,7 @@
                                       <th>Energi</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody v-if="boleh">
                                     <tr v-for="data in data.data" :key="data.id">
                                       <td>{{data.created_at}}</td>
                                       <!--<td>00.00.00</td>-->
@@ -168,6 +168,9 @@ export default {
         .catch(function (error) {
             console.log(error.message);
         });
+        } else{
+          this.ishidden = true
+          this.hideButton = true
         }
           //console.log(app.user)
         })

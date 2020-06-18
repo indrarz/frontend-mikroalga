@@ -29,12 +29,7 @@
     
                   </div>
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-2">
-                                            <router-link to="/admin/register"><button type="button" class="btn btn-block btn-primary">Registrasi Akun</button></router-link>
-
-                      </div>
-                    </div>
+                <button type="button" class="btn btn-primary" @click="register()" >Registrasi Akun</button>
                     <br/>
                     <table id="example2" class="table table-bordered table-hover">
                                     <thead>
@@ -112,6 +107,9 @@ export default {
         const resUrl = usersUrl + '/' + key + '/restore';
         axios.put(resUrl, key, {headers: getHeader()});
         this.getUsers();
+      },
+      register: function(){
+        this.$router.push('/admin/register')
       }
 
     },

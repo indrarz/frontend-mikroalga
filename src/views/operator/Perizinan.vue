@@ -25,38 +25,39 @@
                   <div class="card-header">
                     <h3 class="card-title">
                       <i class="far fa-clipboard"></i>
-                       Registrasi User
+                       Ajukan Perizinan
                     </h3>
     
                   </div>
-                  <form role="form" v-on:submit.prevent="registeruser" method="POST">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="exampleInputName">Nama</label>
-                        <input type="name" class="form-control" id="exampleInputEmail1" placeholder="Masukkan Nama" v-model="register.nama" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Masukkan Email" v-model="register.email" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="register.password" required>
-                      </div>
-                      <div class="form-group">
-                        <label>Role</label>
-                        <select class="form-control" v-model="register.id_role" required>
-                          <option value="2">Peneliti</option>
-                          <option value="3  ">Operator</option>
+                  <div class="card-body">
+                    <div class="form-group">
+                        <label>Pilih Aksi</label>
+                        <select class="form-control">
+                          <option value="" disabled selected>Silakan Pilih</option>
+                          <option @click="selectedAksi = 1101">Unduh Log Sensor</option>
+                          <option @click="selectedAksi = 2501">Pemberian Nutrisi</option>
+                          <option @click="selectedAksi = 2502">Pemanenan</option>
+                          <!--<option value="3  ">Operator</option>-->
                         </select>
                       </div>
-                    </div>
-                    <!-- /.card-body -->
-    
-                    <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                  </form>
+                    <div class="form-group">
+                        <label>Pilih Kolam</label>
+                        <select class="form-control">
+                          <option value="" disabled selected>Silakan Pilih</option>
+                          <option v-for="kolam in kolam.data" :key="kolam.id" @click="getProduksi(kolam.id)">{{kolam.nama_kolam}}</option>
+                          <!--<option value="3  ">Operator</option>-->
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Pilih Produksi</label>
+                        <select class="form-control">
+                          <option value="" disabled selected>Silakan Pilih</option>
+                          <option v-for="prod in prod" :key="prod.id" @click="selectedProd = prod.id">Produksi {{prod.id}}</option>
+                          <!--<option value="3  ">Operator</option>-->
+                        </select>
+                      </div>
+                      <button type="button" class="btn btn-primary" @click="postLogaksi()">Submit</button>
+                  </div>
                   <!-- /.card-body-->
                 </div>
                 <!-- /.card -->
@@ -71,33 +72,51 @@
 </template>
 
 <script>
-import {usersUrl, getHeader} from '../../config'
+import {kolamUrl, logaksiUrl, getHeader} from '../../config'
 import axios from 'axios'
-export default{
-  data(){
+export default {
+  data: function(){
     return{
-      register:{
-        nama: '',
-        email: '',
-        password: '',
-        id_role:''
-      }
+      kolam: [],
+      prod: [],
+      selectedAksi: '',
+      selectedProd: ''
     }
   },
+  
   methods: {
-    registeruser(){
-      const postData = {
-        nama: this.register.nama,
-        email: this.register.email,
-        password: this.register.password,
-        id_role: this.register.id_role
-      }
-     axios.post(usersUrl, postData,{headers: getHeader()})
-        .then(response =>{
-          console.log(response);
-          this.$router.push('/admin/usermanagement')
+    getKolam: function(){
+        var app = this;
+        axios.get(kolamUrl, {headers: getHeader()})
+        .then(function(response){
+          app.kolam=response.data;
+          //console.log(app.kolam)
         })
-    }
+      },
+      getProduksi: function(key){
+        console.log(this.selectedAksi)
+        var app = this;
+        var prodUrl = kolamUrl + '/' + key + '/produksi';
+        axios.get(prodUrl, {headers: getHeader()})
+        .then(function(response){
+          app.prod=response.data.data;
+          //app.isHidden=false;
+          //console.log(app.prod)
+        })
+      },
+      postLogaksi: function(){
+        const postData ={
+          id_aksi: this.selectedAksi,
+          id_produksi: this.selectedProd
+        }
+        axios.post(logaksiUrl, postData, {headers: getHeader()})
+        .then(function(response){
+          console.log(response)
+        })
+      }
+  },
+  created(){
+    this.getKolam();
   }
 }
 </script>

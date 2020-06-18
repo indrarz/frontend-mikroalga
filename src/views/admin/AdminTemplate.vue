@@ -75,6 +75,12 @@
                   <p>Data Kolam</p>
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link to="/admin/akun" class="nav-link">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>Pengaturan Akun</p>
+                </router-link>
+              </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

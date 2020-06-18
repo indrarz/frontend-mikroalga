@@ -76,6 +76,12 @@
                   <p>Log Data</p>
           </router-link>
               </li>
+              <li class="nav-item">
+                <router-link to="/operator/akun" class="nav-link">
+                  <i class="nav-icon fas fa-cog"></i>
+                  <p>Pengaturan Akun</p>
+                </router-link>
+              </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

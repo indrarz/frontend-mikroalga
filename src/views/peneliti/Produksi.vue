@@ -230,7 +230,6 @@ export default {
           app.prod=response.data.data;
           //app.isHidden=false;
           //console.log(app.prod[0].waktu_mulai)
-          var temp = []
           for (let index = 0; index < app.prod.length; index++) {
               //var kolamini = kolamUrl + '/' + app.prod[index].id_kolam
               var algaini = mikroalgaUrl + '/' + app.prod[index].id_mikroalga
@@ -238,6 +237,7 @@ export default {
               .then(function(response){
                 app.namakolam.push(response.data.data.nama_kolam)
               })*/
+              var temp = []
               axios.get(algaini, {headers: getHeader()})
               .then(function(response){
                 temp.push(response.data.data.nama_spesies)

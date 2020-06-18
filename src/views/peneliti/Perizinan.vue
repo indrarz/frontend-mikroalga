@@ -41,8 +41,8 @@
                       </thead>
                       <tbody>
                       <tr v-for="(list, index) in list.data" :key="list.id">
-                        <td>{{user[index*2]}}</td>
-                        <td>{{user[(index*2)+1]}}</td>
+                        <td>{{nama[index]}}</td>
+                        <td>{{email[index]}}</td>
                         <td v-if="list.id_aksi === 1101">Unduh Log Sensor</td>
                         <td v-else-if="list.id_aksi === 2501">Pemberian Nutrisi</td>
                         <td v-else-if="list.id_aksi === 2502">Pemanenan</td>
@@ -78,7 +78,8 @@ export default {
   data: function(){
     return{
       list: [],
-      user: []
+      nama: [],
+      email: []
     }
   },
 
@@ -93,8 +94,8 @@ export default {
             var namaUrl = usersUrl + '/' + app.list.data[index].id_user
             axios.get(namaUrl, {headers: getHeader()})
             .then(function(response){
-              app.user.push(response.data.data.nama);
-              app.user.push(response.data.data.email);
+              app.nama.push(response.data.data.nama);
+              app.email.push(response.data.data.email);
               
               
             })
