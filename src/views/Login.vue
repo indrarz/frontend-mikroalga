@@ -8,7 +8,13 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Login</p>
-
+      <b-alert
+      variant="danger"
+      dismissible
+      fade
+      :show="showDismissibleAlert"
+      @dismissed="showDismissibleAlert=false"
+    >Email atau Password yang anda masukkan salah</b-alert>
       <form autocomplete="off" v-on:submit.prevent="loginuser" method="POST">
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" id="email" v-model="login.email" required>
@@ -28,8 +34,10 @@
         </div>
         <div class="row">
           <!-- /.col -->
+          <div class="col-6"><p style="text-align: right;" v-if="isLoading === true">Loading</p></div>
+          <div class="col-2"><b-icon icon="three-dots" animation="cylon" font-scale="2" v-if="isLoading === true"></b-icon></div>
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block" style="margin-left: 223px;">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -51,7 +59,11 @@ export default{
       login:{
         email: '',
         password: ''
-      }
+      },
+      isLoading: false,
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
     }
   },
   methods: {
@@ -63,10 +75,12 @@ export default{
        .catch(err => console.log(err))
       }*/
     loginuser(){
+      this.isLoading = true
       const postData = {
         email: this.login.email,
         password: this.login.password,
       }
+      var app = this
       const authUser = {}
       axios.post(loginUrl,postData)
         .then(response => {
@@ -92,6 +106,15 @@ export default{
               })
           }
         })
+      const isauthUser = JSON.parse(window.localStorage.getItem('authUser'))
+      if(!isauthUser){
+        setTimeout(() => {
+          app.isLoading = false
+          app.showDismissibleAlert = true
+        }, 10000);
+        
+      }
+      
     }
   }
 }

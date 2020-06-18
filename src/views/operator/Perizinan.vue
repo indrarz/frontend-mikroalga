@@ -110,9 +110,15 @@ export default {
           id_produksi: this.selectedProd
         }
         axios.post(logaksiUrl, postData, {headers: getHeader()})
-        .then(function(response){
-          console.log(response)
+        this.perizinansukses();
+      },
+      perizinansukses: function() {
+          this.$bvToast.toast('Permintaan Log aksi berhasil diajukan', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
         })
+        
       }
   },
   created(){

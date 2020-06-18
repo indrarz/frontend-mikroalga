@@ -100,16 +100,33 @@ export default {
         //window.console.log('id delete' + key)
         const delUrl = usersUrl + '/' + key;
         axios.delete(delUrl, {headers: getHeader()});
+        this.makeToast('danger');
         this.getUsers();
       },
       restoreUser: function(key){
         //window.console.log('id delete' + key)
         const resUrl = usersUrl + '/' + key + '/restore';
         axios.put(resUrl, key, {headers: getHeader()});
+        this.makeToast('success');
         this.getUsers();
       },
       register: function(){
         this.$router.push('/admin/register')
+      },
+      makeToast: function(variant) {
+        if(variant == 'success'){
+          this.$bvToast.toast('Akun berhasil diaktifkan kembali', {
+          title: 'Notifikasi',
+          variant: variant,
+          solid: true
+        })
+        } else{
+          this.$bvToast.toast('Akun berhasil dinonaktifkan', {
+          title: 'Notifikasi',
+          variant: variant,
+          solid: true
+        })
+        }
       }
 
     },

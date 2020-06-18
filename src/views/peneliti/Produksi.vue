@@ -260,9 +260,7 @@ export default {
           id_mikroalga : this.selectedAlga
         }
         axios.post(produksiUrl, addData, {headers: getHeader()})
-        .then(function(response){
-          console.log(response)
-        })
+        this.addsukses();
       },
       doPanen: function(){
         const postData ={
@@ -329,6 +327,14 @@ export default {
         .then(function(response){
           console.log(response)
         })
+      },
+      addsukses: function() {
+          this.$bvToast.toast('Produksi Berhasil Ditambahkan', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+        
       }
     },
 

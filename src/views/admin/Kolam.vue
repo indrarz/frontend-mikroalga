@@ -184,22 +184,42 @@ export default {
           }
           var editUrl = kolamUrl + '/' + this.edit.id
           axios.put(editUrl, editData, {headers: getHeader()})
-          this.getKolam();
+          this.editsukses();
       },
       addKolam: function(){
         const addData = {
               nama_kolam: this.add.nama_kolam,
           }
           axios.post(kolamUrl, addData, {headers: getHeader()})
-          this.getKolam();
+          
+          this.addsukses();
       },
       hapusKolam: function(key){
         var delUrl = kolamUrl + '/' + key;
         axios.delete(delUrl, {headers: getHeader()})
-        this.getKolam();
+        this.delsukses();
       },
-      pulihkanKolam: function(){
-
+      addsukses: function() {
+          this.$bvToast.toast('Kolam Berhasil Ditambahkan', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+        
+      },
+      editsukses: function() {
+        this.$bvToast.toast('Informasi Kolam Berhasil Diubah', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+      },
+      delsukses: function(){
+        this.$bvToast.toast('Informasi Kolam Berhasil Dihapus', {
+          title: 'Notifikasi',
+          variant: 'danger',
+          solid: true
+      })
       }
     },
     created(){

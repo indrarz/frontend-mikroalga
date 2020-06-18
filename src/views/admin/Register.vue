@@ -95,9 +95,21 @@ export default{
      axios.post(usersUrl, postData,{headers: getHeader()})
         .then(response =>{
           console.log(response);
-          this.$router.push('/admin/usermanagement')
+          this.makeToast('success');
+          this.register = null
+          //this.$router.push('/admin/usermanagement')
+
         })
-    }
+    },
+    makeToast(variant) {
+        if(variant == 'success'){
+          this.$bvToast.toast('Registrasi Berhasil', {
+          title: 'Notifikasi',
+          variant: variant,
+          solid: true
+        })
+        }
+      }
   }
 }
 </script>

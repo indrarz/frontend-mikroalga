@@ -108,14 +108,29 @@ export default {
       //var app = this;
       var accUrl = logaksiUrl + '/' + key + '/approve'
       axios.put(accUrl, '', {headers: getHeader()})
-      this.getLogaksi();
+      this.acceptsukses();
     },
     rejectLog: function(key){
       //var app = this;
       var rejectUrl = logaksiUrl + '/' + key + '/approve'
       axios.put(rejectUrl, '', {headers: getHeader()})
-      this.getLogaksi();
-    }
+      this.rejectsukses();
+    },
+    acceptsukses: function() {
+          this.$bvToast.toast('Permintaan aksi berhasil disetujui', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+        
+      },
+      rejectsukses: function(){
+        this.$bvToast.toast('Permintaan aksi berhasil ditolak', {
+          title: 'Notifikasi',
+          variant: 'danger',
+          solid: true
+      })
+      }
   },
   created(){
     this.getLogaksi();

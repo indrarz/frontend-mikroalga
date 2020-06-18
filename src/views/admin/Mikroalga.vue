@@ -224,7 +224,8 @@ export default {
           }
           var editUrl = mikroalgaUrl + '/' + this.data.id
           axios.put(editUrl, editData, {headers: getHeader()})
-          this.getMikroalga();
+          this.editsukses();
+          
       },
       addAlga: function(){
         const addData = {
@@ -234,15 +235,37 @@ export default {
               intensitas_cahaya_optimal: this.add.intensitas_cahaya_optimal
           }
           axios.post(mikroalgaUrl, addData, {headers: getHeader()})
-          this.getMikroalga();
+          this.addsukses()
+          
       },
       delAlga: function(key){
         var delUrl = mikroalgaUrl + '/' + key;
         axios.delete(delUrl, {headers: getHeader()})
-        .then(response =>{
-          console.log(response);
+        this.delsukses();
+      },
+      addsukses: function() {
+          this.$bvToast.toast('Mikroalga Berhasil Ditambahkan', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
         })
+        
+      },
+      editsukses: function() {
+        this.$bvToast.toast('Informasi Mikroalga Berhasil Dihapus', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+      },
+      delsukses: function(){
+        this.$bvToast.toast('Informasi Mikroalga Berhasil Dihapus', {
+          title: 'Notifikasi',
+          variant: 'danger',
+          solid: true
+      })
       }
+      
 
     },
 

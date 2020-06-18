@@ -105,9 +105,7 @@ export default {
         
         var emailUrl = usersUrl + '/' + app.myid + '/email';
         axios.put(emailUrl,emailData, {headers: getHeader()})
-        .then(response=>{
-            console.log(response)
-        })
+        this.emailsukses()
     },
     changePassword: function(){
         var app = this;
@@ -117,12 +115,23 @@ export default {
             }
             var passwordUrl = usersUrl + '/' + app.myid + '/password'
             axios.put(passwordUrl, passwordData, {headers: getHeader()})
-            .then(response=>{
-                console.log(response)
-            })
+            this.passwordsukses()
         }
-    }
-
+    },
+    emailsukses: function() {
+        this.$bvToast.toast('Email Berhasil Diubah', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+      },
+    passwordsukses: function() {
+        this.$bvToast.toast('Password Berhasil Diubah', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+      },
     },
     created(){
         this.getMe();
