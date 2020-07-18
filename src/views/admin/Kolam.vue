@@ -162,7 +162,7 @@ export default {
         var app = this;
         axios.get(kolamUrl, {headers: getHeader()})
         .then(function(response){
-          app.kolam=response.data;
+          app.kolam=response.data.data;
           console.log(app.kolam);
         })
       },

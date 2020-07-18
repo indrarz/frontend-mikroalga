@@ -35,6 +35,7 @@
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Nama Aksi</th>
+                        <th>Produksi</th>
                         <th>Status</th>
                         <th>Aksi</th>
                       </tr>
@@ -46,10 +47,11 @@
                         <td v-if="list.id_aksi === 1101">Unduh Log Sensor</td>
                         <td v-else-if="list.id_aksi === 2501">Pemberian Nutrisi</td>
                         <td v-else-if="list.id_aksi === 2502">Pemanenan</td>
-                        <td v-if="list.approved === null">Pending</td>
-                        <td v-else-if="list.approved === true">Diizinkan</td>
-                        <td v-else-if="list.approved === false">Ditolak</td>
-                        <td v-if="list.approved === null">
+                        <td>Produksi {{list.id_produksi}}</td>
+                        <td v-if="list.is_approved === null">Pending</td>
+                        <td v-else-if="list.is_approved === 1">Diizinkan</td>
+                        <td v-else-if="list.is_approved === 0">Ditolak</td>
+                        <td v-if="list.is_approved === null">
                           <button type="button" class="btn btn-block bg-gradient-success btn-sm" @click="acceptLog(list.id)">Izinkan</button>
                            <button type="button" class="btn btn-block bg-gradient-danger btn-sm" @click="rejectLog(list.id)">Tolak</button>
                         </td>
@@ -72,7 +74,7 @@
 </template>
 
 <script>
-import {logaksiUrl, usersUrl, getHeader} from '../../config'
+import {perizinanUrl, usersUrl, getHeader} from '../../config'
 import axios from 'axios'
 export default {
   data: function(){
@@ -86,9 +88,9 @@ export default {
   methods: {
     getLogaksi: function(){
       var app = this;
-        axios.get(logaksiUrl, {headers: getHeader()})
+        axios.get(perizinanUrl, {headers: getHeader()})
         .then(function(response){
-          app.list=response.data;
+          app.list=response.data.data;
           //console.log(app.list.data.length)
           for (let index = 0; index < app.list.data.length; index++) {
             var namaUrl = usersUrl + '/' + app.list.data[index].id_user
@@ -106,13 +108,13 @@ export default {
     },
     acceptLog: function(key){
       //var app = this;
-      var accUrl = logaksiUrl + '/' + key + '/approve'
+      var accUrl = perizinanUrl + '/' + key + '/approve'
       axios.put(accUrl, '', {headers: getHeader()})
       this.acceptsukses();
     },
     rejectLog: function(key){
       //var app = this;
-      var rejectUrl = logaksiUrl + '/' + key + '/approve'
+      var rejectUrl = perizinanUrl + '/' + key + '/approve'
       axios.put(rejectUrl, '', {headers: getHeader()})
       this.rejectsukses();
     },

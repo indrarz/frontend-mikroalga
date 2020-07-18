@@ -45,6 +45,7 @@
                         <th>Spesies Mikroalga</th>
                         <th>Waktu Mulai</th>
                         <th>Waktu Selesai</th>
+                        <th>Hasil Produksi</th>
                         <th>Aksi</th>
                       </tr>
                       </thead>
@@ -55,9 +56,16 @@
                         <td>{{prod.waktu_mulai}}</td>
                         <td v-if="prod.waktu_selesai === null">-</td>
                         <td v-else>{{prod.waktu_selesai}}</td>
-                        <td><button type="button" class="btn btn-block btn-success btn-sm" @click="doPanen()" data-toggle="modal" data-target="#stop-panen">Panen</button>
+                        <td v-if="prod.hasil_produksi === null">-</td>
+                        <td v-else>{{prod.hasil_produksi}}</td>
+                        <td v-if="prod.waktu_selesai === null"><button type="button" class="btn btn-block btn-success btn-sm" @click="doPanen()" data-toggle="modal" data-target="#stop-panen">Panen</button>
                           <button type="button" class="btn btn-block btn-primary btn-sm" @click="doNutrisi()" data-toggle="modal" data-target="#stop-nutrisi">Tambahkan Nutrisi</button>
-                          <button type="button" class="btn btn-block btn-info btn-sm" @click="doAir()" data-toggle="modal" data-target="#stop-air">Tambahkan Air</button></td>
+                          <button type="button" class="btn btn-block btn-info btn-sm" @click="doAir()" data-toggle="modal" data-target="#stop-air">Tambahkan Air</button>
+                          <button type="button" class="btn btn-block btn-danger btn-sm" @click="stopProduksi()">Akhiri Produksi</button></td>
+                        <td v-else-if="prod.hasil_produksi === null">
+                          <button type="button" class="btn btn-block btn-success btn-sm" @click="hasilProduksi()" data-toggle="modal" data-target="#stop-panen">Tambahkan Hasil Produksi</button>
+                        </td>
+                        <td v-else></td>
                       </tr>
                       </tbody>
                     </table>
@@ -194,7 +202,8 @@ export default {
             namaalga: [],
             algas: [],
             selectedKolam: '',
-            selectedAlga: ''
+            selectedAlga: '',
+            jumlahProduksi: ''
         }
     },
 
@@ -327,6 +336,15 @@ export default {
         .then(function(response){
           console.log(response)
         })
+      },
+      stopProduksi: function(key){
+        var stopUrl = produksiUrl + '/' + key + '/end'
+        axios.put(stopUrl, '', {headers: getHeader()})
+
+      },
+      hasilProduksi: function(key){
+        var hasilUrl = produksiUrl + '/' + key + '/hasil-produksi'
+        axios.put(hasilUrl, '', )
       },
       addsukses: function() {
           this.$bvToast.toast('Produksi Berhasil Ditambahkan', {

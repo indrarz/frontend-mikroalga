@@ -127,7 +127,6 @@ export default {
 
         var app = this;
         const outputUrl = produksiUrl+'/1/output_sensor/latest'
-        setInterval(() => {
           axios.get(outputUrl, {headers: getHeader()})
             .then(function (response) {
             app.suhu_air = response.data.data.suhu_air;
@@ -144,7 +143,6 @@ export default {
             console.log(error.message);
         });
           
-        }, 5000);
 
       }
 

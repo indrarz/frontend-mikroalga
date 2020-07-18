@@ -8,6 +8,7 @@ export const kolamUrl = apiDomain + 'api/kolam'
 export const mikroalgaUrl = apiDomain + 'api/mikroalga'
 export const logaksiUrl = apiDomain + 'api/log_aksi'
 export const aksiUrl = apiDomain + 'api/exec'
+export const perizinanUrl = apiDomain + 'api/perizinan'
 
 export const getHeader = function(){
     const tokenData = JSON.parse(window.localStorage.getItem('authUser'))

@@ -88,8 +88,8 @@ export default {
 
          axios.get(usersUrl, {headers: getHeader()})
             .then(function (response) {
-            app.data = response.data;
-            //console.log(app.data);
+            app.data = response.data.data;
+            console.log(app.data);
         })
         .catch(function (error) {
             console.log(error.message);
