@@ -30,8 +30,17 @@
     
                   </div>
                   <div class="card-body">
-                    
-                    <div class="row">
+                    <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="custom-content-below-realtime-tab" data-toggle="pill" href="#realtime" role="tab" aria-controls="custom-content-below-realtime" aria-selected="true">Data Realtime</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="custom-content-below-grafik-tab" data-toggle="pill" href="#grafik" role="tab" aria-controls="custom-content-below-grafik" aria-selected="false">Grafik</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="custom-content-below-tabContent">
+                      <div class="tab-pane fade show active" id="realtime" role="tabpanel" aria-labelledby="custom-content-below-reatime-tab">
+                        <div class="row">
                       <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-info">
@@ -79,10 +88,8 @@
                     </div>
                     <br/>
                     <dl class="row">
-                        <dt class="col-sm-4">Tanggal Panen Terakhir</dt>
-                        <dd class="col-sm-8">29 Januari 2020</dd>
                         <dt class="col-sm-4">Kekeruhan</dt>
-                        <dd class="col-sm-8">{{kekeruhan}}</dd>
+                        <dd class="col-sm-8">{{kekeruhan}} NTU</dd>
                         <dt class="col-sm-4">Kecepatan Air</dt>
                         <dd class="col-sm-8">{{kecepatan_air}} cm<sup>3</sup>/s</dd>
                         <dt class="col-sm-4">Kecepatan Udara</dt>
@@ -90,6 +97,12 @@
                         <dt class="col-sm-4">Energi</dt>
                         <dd class="col-sm-8">{{energi_listrik}} W</dd>
                     </dl>
+                  </div>
+                      <div class="tab-pane fade" id="grafik" role="tabpanel" aria-labelledby="custom-content-below-grafik-tab">
+                      <line-chart :data="graphdata"></line-chart>
+                      </div>
+                    </div>
+                    
                   </div>
                   <!-- /.card-body-->
                 </div>
@@ -106,8 +119,8 @@
 <script>
 import {getHeader, produksiUrl} from '../../config'
 import axios from 'axios'
+//import LineChart from '../../LineChart.js'
 export default {
-
     data: function () {
         return {
           suhu_air: '',
@@ -117,7 +130,14 @@ export default {
           kekeruhan: '',
           kecepatan_air: '',
           aliran_udara: '',
-          energi_listrik: ''
+          energi_listrik: '',
+          graphdata:[],
+          //graphlabel:[]
+          /*chartData: {
+            '2017-05-13' : 2,
+            '2017-05-14' : 5,
+            '2017-05-15' : 4
+          }*/
         }
     },
 
@@ -126,7 +146,7 @@ export default {
       getOutput: function() {
 
         var app = this;
-        const outputUrl = produksiUrl+'/1/output_sensor/latest'
+        const outputUrl = produksiUrl+'/1/output-sensor/latest'
         setInterval(() => {
           axios.get(outputUrl, {headers: getHeader()})
             .then(function (response) {
@@ -138,6 +158,15 @@ export default {
             app.kecepatan_air = response.data.data.kecepatan_air;
             app.aliran_udara = response.data.data.aliran_udara;
             app.energi_listrik = response.data.data.energi_listrik;
+            if(response.data.data.suhu_air > 34){
+              app.suhutinggi(); //34 adalah nilai suhu tinggi sementara, nanti ditanya ke pak ganjar berapa patokan suhu terlalu tinggi
+            }
+            if(response.data.data.kekeruhan > 50){
+              app.panennotif(); //50 adalah ntu sementara, nanti tanya pak ganjar nilai pastinya
+            }
+            if(response.data.data.kecepatan_air <= 1){
+              app.waternotif(); //nanti ditanya mending 1 apa 0
+            }
             //console.log(app.data);
         })
         .catch(function (error) {
@@ -146,12 +175,58 @@ export default {
           
         }, 5000);
 
+      },
+      
+      getLog: function() {
+        var app = this;
+        var logUrl = produksiUrl + '/1/output-sensor'
+        //var downloadUrl = logUrl + '/download'
+         axios.get(logUrl, {headers: getHeader()})
+            .then(function (response) {
+            var temp = []
+            temp = response.data.data;
+            for (let i = 0; i < temp.data.length; i++) {
+              var x = [];
+              x.push(temp.data[i].created_at)
+              x.push(temp.data[i].suhu_air)
+              app.graphdata.push(x)
+            }
+            //console.log(app.graphdata);
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      suhutinggi: function() {
+          this.$bvToast.toast('Suhu Terlalu Tinggi', {
+          title: 'Peringatan',
+          variant: 'danger',
+          solid: true
+        })
+        
+      },
+      panennotif: function() {
+          this.$bvToast.toast('Produksi 1 siap untuk dipanen', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+        
+      },
+      waternotif: function() {
+          this.$bvToast.toast('Paddlewheel sedang tidak berjalan', {
+          title: 'Peringatan',
+          variant: 'warning',
+          solid: true
+        })
+        
       }
 
     },
 
     created() {
       this.getOutput();
+      this.getLog();
     }
 
     }

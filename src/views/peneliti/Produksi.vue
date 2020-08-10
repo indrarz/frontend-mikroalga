@@ -31,9 +31,9 @@
                   <div class="card-body">
                       <div class="form-group">
                         <label>Pilih Kolam</label>
-                        <select class="form-control">
+                        <select class="form-control" @change="getProduksi">
                           <option value="" disabled selected>Silakan Pilih</option>
-                          <option v-for="kolams in kolams.data" :key="kolams.id" @click="getProduksi(kolams.id)">{{kolams.nama_kolam}}</option>
+                          <option v-for="kolams in kolams.data" :key="kolams.id" v-bind:value="kolams.id">{{kolams.nama_kolam}}</option>
                           <!--<option value="3  ">Operator</option>-->
                         </select>
                       </div>
@@ -212,8 +212,8 @@ export default {
         var app = this;
         axios.get(kolamUrl, {headers: getHeader()})
         .then(function(response){
-          app.kolams=response.data;
-          //console.log(app.kolam)
+          app.kolams=response.data.data;
+          console.log(app.kolams)
         })
       },
       getMikroalga: function() {
@@ -222,7 +222,7 @@ export default {
 
          axios.get(mikroalgaUrl, {headers: getHeader()})
             .then(function (response) {
-            app.algas = response.data;
+            app.algas = response.data.data;
             //console.log(response.data);
         })
         .catch(function (error) {
@@ -231,12 +231,13 @@ export default {
 
       },
 
-      getProduksi: function(key){
+      getProduksi: function(event){
+        var key = event.target.value
         var app = this;
         var prodUrl = kolamUrl + '/' + key + '/produksi';
         axios.get(prodUrl, {headers: getHeader()})
         .then(function(response){
-          app.prod=response.data.data;
+          app.prod=response.data.data.data;
           //app.isHidden=false;
           //console.log(app.prod[0].waktu_mulai)
           for (let index = 0; index < app.prod.length; index++) {

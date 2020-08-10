@@ -231,7 +231,7 @@ export default {
         var app = this;
         axios.get(kolamUrl, {headers: getHeader()})
         .then(function(response){
-          app.kolams=response.data;
+          app.kolams=response.data.data;
           //console.log(app.kolam)
         })
       },
@@ -241,7 +241,7 @@ export default {
 
          axios.get(mikroalgaUrl, {headers: getHeader()})
             .then(function (response) {
-            app.algas = response.data;
+            app.algas = response.data.data;
             //console.log(response.data);
         })
         .catch(function (error) {
@@ -257,7 +257,7 @@ export default {
         var prodUrl = kolamUrl + '/' + key + '/produksi';
         axios.get(prodUrl, {headers: getHeader()})
         .then(function(response){
-          app.prod=response.data.data;
+          app.prod=response.data.data.data;
           //app.isHidden=false;
           //console.log(app.prod[0].waktu_mulai)
           for (let index = 0; index < app.prod.length; index++) {

@@ -107,7 +107,7 @@ export default {
         var app = this;
         axios.get(kolamUrl, {headers: getHeader()})
         .then(function(response){
-          app.kolam=response.data;
+          app.kolam=response.data.data;
           //console.log(app.kolam)
         })
       },
@@ -116,7 +116,7 @@ export default {
         var prodUrl = kolamUrl + '/' + key + '/produksi';
         axios.get(prodUrl, {headers: getHeader()})
         .then(function(response){
-          app.prod=response.data.data;
+          app.prod=response.data.data.data;
           app.isHidden=false;
           //console.log(app.prod)
         })
@@ -125,12 +125,12 @@ export default {
       getLog: function(key) {
 
         var app = this;
-        var logUrl = produksiUrl + '/' + key + '/output_sensor'
+        var logUrl = produksiUrl + '/' + key + '/output-sensor'
         var downloadUrl = logUrl + '/download'
 
          axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
-            app.data = response.data;
+            app.data = response.data.data;
             app.hideButton = false;
             //console.log(app.data)
         })

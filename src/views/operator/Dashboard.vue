@@ -126,7 +126,7 @@ export default {
       getOutput: function() {
 
         var app = this;
-        const outputUrl = produksiUrl+'/1/output_sensor/latest'
+        const outputUrl = produksiUrl+'/1/output-sensor/latest'
         setInterval(() => {
           axios.get(outputUrl, {headers: getHeader()})
             .then(function (response) {
