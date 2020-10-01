@@ -30,6 +30,22 @@
     
                   </div>
                   <div class="card-body">
+                    <div class="form-group">
+                        <label>Pilih Kolam</label>
+                        <select class="form-control" @change="getProduksi">
+                          <option value="" disabled selected>Silakan Pilih</option>
+                          <option v-for="kolam in kolam.data" :key="kolam.id" v-bind:value="kolam.id">{{kolam.nama_kolam}}</option>
+                          <!--<option value="3  ">Operator</option>-->
+                        </select>
+                      </div>
+                      <div class="form-group" v-if="isHidden === false">
+                        <label>Pilih Produksi</label>
+                        <select class="form-control" @change="getOutput">
+                          <option value="" disabled selected>Silakan Pilih</option>
+                          <option v-for="prod in prod" :key="prod.id" v-bind:value="prod.id">Produksi {{prod.id}}</option>
+                          <!--<option value="3  ">Operator</option>-->
+                        </select>
+                      </div>
                     <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
                       <li class="nav-item">
                         <a class="nav-link active" id="custom-content-below-realtime-tab" data-toggle="pill" href="#realtime" role="tab" aria-controls="custom-content-below-realtime" aria-selected="true">Data Realtime</a>
@@ -45,7 +61,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3>{{suhu_air}}</h3>
+                            <h3>{{suhu_air}} °C</h3>
             
                             <p>Suhu</p>
                           </div>
@@ -67,7 +83,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <h3>{{intensitas_cahaya}}</h3>
+                            <h3>{{intensitas_cahaya}} lux</h3>
             
                             <p>Intensitas Cahaya</p>
                           </div>
@@ -78,7 +94,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <h3>{{ketinggian_air}}</h3>
+                            <h3>{{ketinggian_air}} cm</h3>
             
                             <p>Ketinggian Air</p>
                           </div>
@@ -95,7 +111,7 @@
                         <dt class="col-sm-4">Kecepatan Udara</dt>
                         <dd class="col-sm-8">{{aliran_udara}} cm/s</dd>
                         <dt class="col-sm-4">Energi</dt>
-                        <dd class="col-sm-8">{{energi_listrik}} W</dd>
+                        <dd class="col-sm-8">{{energi_listrik}} kW/h</dd>
                     </dl>
                   </div>
                       <div class="tab-pane fade" id="grafik" role="tabpanel" aria-labelledby="custom-content-below-grafik-tab">
@@ -117,12 +133,15 @@
 </template>
 
 <script>
-import {getHeader, produksiUrl} from '../../config'
+import {getHeader, produksiUrl, kolamUrl} from '../../config'
 import axios from 'axios'
+import moment from 'moment'
 //import LineChart from '../../LineChart.js'
 export default {
     data: function () {
         return {
+          kolam: [],
+          prod: [],
           suhu_air: '',
           ph_air: '',
           intensitas_cahaya: '',
@@ -132,6 +151,8 @@ export default {
           aliran_udara: '',
           energi_listrik: '',
           graphdata:[],
+          isHidden: true,
+          rt :null
           //graphlabel:[]
           /*chartData: {
             '2017-05-13' : 2,
@@ -142,12 +163,36 @@ export default {
     },
 
     methods: {
+      getKolam: function(){
+        var app = this;
+        axios.get(kolamUrl, {headers: getHeader()})
+        .then(function(response){
+          app.kolam=response.data.data;
+          //console.log(app.kolam)
+        })
+      },
+      getProduksi: function(event){
+        var app = this;
+        app.isHidden = true;
+        var key = event.target.value;
+        var prodUrl = kolamUrl + '/' + key + '/produksi';
+        axios.get(prodUrl, {headers: getHeader()})
+        .then(function(response){
+          app.prod=response.data.data.data;
+          app.isHidden=false;
+          //console.log(app.prod)
+        })
+      },
 
-      getOutput: function() {
+      getOutput: function(event) {
 
         var app = this;
-        const outputUrl = produksiUrl+'/1/output-sensor/latest'
-        setInterval(() => {
+        window.clearInterval(this.rt)
+        var key = event.target.value;
+        const outputUrl = produksiUrl+'/'+ key +'/output-sensor/latest'
+        app.getLog(key)
+        app.rt = setInterval(() => {
+          
           axios.get(outputUrl, {headers: getHeader()})
             .then(function (response) {
             app.suhu_air = response.data.data.suhu_air;
@@ -162,7 +207,7 @@ export default {
               app.suhutinggi(); //34 adalah nilai suhu tinggi sementara, nanti ditanya ke pak ganjar berapa patokan suhu terlalu tinggi
             }
             if(response.data.data.kekeruhan > 50){
-              app.panennotif(); //50 adalah ntu sementara, nanti tanya pak ganjar nilai pastinya
+              app.panennotif(); //50 adalah ntu sementara, nanti tanya pak ganjar nilai pastinya //pake waktu panen aja
             }
             if(response.data.data.kecepatan_air <= 1){
               app.waternotif(); //nanti ditanya mending 1 apa 0
@@ -177,9 +222,11 @@ export default {
 
       },
       
-      getLog: function() {
+      getLog: function(key) {
         var app = this;
-        var logUrl = produksiUrl + '/1/output-sensor'
+        app.graphdata = []
+        //console.log(moment("2020-07-26 11:11:14").format())
+        var logUrl = produksiUrl + '/'+key+'/output-sensor'
         //var downloadUrl = logUrl + '/download'
          axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
@@ -187,7 +234,17 @@ export default {
             temp = response.data.data;
             for (let i = 0; i < temp.data.length; i++) {
               var x = [];
-              x.push(temp.data[i].created_at)
+              var date = ''
+              //console.log(temp.data[i].created_at)
+             if(i<10){
+               date = '2020-07-26 11:11:0' + i
+             }
+             else{
+               date = '2020-07-26 11:11:' + i
+             }
+             console.log(date)
+              x.push(moment(date).format())  
+              //x.push(moment(temp.data[i].created_at).format())  
               x.push(temp.data[i].suhu_air)
               app.graphdata.push(x)
             }
@@ -225,8 +282,8 @@ export default {
     },
 
     created() {
-      this.getOutput();
-      this.getLog();
+      this.getKolam();
+      //this.getLog();
     }
 
     }

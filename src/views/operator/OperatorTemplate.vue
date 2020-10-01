@@ -53,15 +53,15 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
          <li class="nav-item">
-                <router-link to="/operator" class="nav-link">
+                <a href="/operator" class="nav-link">
                  <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
-                </router-link>
+                </a>
               </li>
               <li class="nav-item">
                 <router-link to="/operator/perizinan" class="nav-link">
                   <i class="nav-icon far fa-list-alt active"></i>
-                  <p>Daftar Izin Akses</p>
+                  <p>Perizinan</p>
                 </router-link>
               </li>
         <li class="nav-item">
@@ -108,12 +108,13 @@
 </template>
 
 <script>
-import {getHeader, apiDomain, userUrl} from '../../config'
+import {getHeader, apiDomain, userUrl, refreshUrl} from '../../config'
 import axios from 'axios'
 export default {
         data: function () {
         return {
-          datas: []
+          datas: [],
+          temp: null
         }
     },
   methods:{
@@ -121,7 +122,7 @@ export default {
       const logoutUrl = apiDomain+'api/auth/logout';
       axios.get(logoutUrl,{headers: getHeader()})
       .then(response =>{
-        window.localStorage.removeItem('authUser');
+        window.sessionStorage.removeItem('authUser');
         console.log(response);
         this.$router.push('/')
       })
@@ -137,10 +138,22 @@ export default {
         .catch(function (error) {
             console.log(error.message);
         });
+    },
+    refresh: function(){
+      var app = this
+      const authUser = {}
+      axios.get(refreshUrl, {headers: getHeader()})
+      .then(function(response){
+        authUser.access_token = response.data.access_token
+        window.sessionStorage.setItem('authUser', JSON.stringify(authUser))
+      })
+      app.temp = setTimeout(()=>{this.refresh()}, 1800000)
     }
   },
   created(){
     this.getMe();
-  }
+    setTimeout(()=>{this.refresh()}, 1800000)   
+
+}
 }
 </script>

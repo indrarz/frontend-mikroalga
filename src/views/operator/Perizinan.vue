@@ -32,27 +32,26 @@
                   <div class="card-body">
                     <div class="form-group">
                         <label>Pilih Aksi</label>
-                        <select class="form-control">
+                        <select class="form-control" @change="selectAksi">
                           <option value="" disabled selected>Silakan Pilih</option>
-                          <option @click="selectedAksi = 1101">Unduh Log Sensor</option>
-                          <option @click="selectedAksi = 2501">Pemberian Nutrisi</option>
-                          <option @click="selectedAksi = 2502">Pemanenan</option>
+                          <option value="1100">Unduh Log Sensor</option>
+                          <option value="1200">Melakukan Aksi Pada Kolam</option>
                           <!--<option value="3  ">Operator</option>-->
                         </select>
                       </div>
                     <div class="form-group">
                         <label>Pilih Kolam</label>
-                        <select class="form-control">
-                          <option value="" disabled selected>Silakan Pilih</option>
-                          <option v-for="kolam in kolam.data" :key="kolam.id" @click="getProduksi(kolam.id)">{{kolam.nama_kolam}}</option>
+                        <select class="form-control" @change="getProduksi">
+                          <option value="" disabled selected >Silakan Pilih</option>
+                          <option v-for="kolam in kolam.data" :key="kolam.id" v-bind:value="kolam.id">{{kolam.nama_kolam}}</option>
                           <!--<option value="3  ">Operator</option>-->
                         </select>
                       </div>
                       <div class="form-group">
                         <label>Pilih Produksi</label>
-                        <select class="form-control">
+                        <select class="form-control" @change="selectProd">
                           <option value="" disabled selected>Silakan Pilih</option>
-                          <option v-for="prod in prod" :key="prod.id" @click="selectedProd = prod.id">Produksi {{prod.id}}</option>
+                          <option v-for="prod in prod.data" :key="prod.id" v-bind:value="prod.id" >Produksi {{prod.id}}</option>
                           <!--<option value="3  ">Operator</option>-->
                         </select>
                       </div>
@@ -72,7 +71,7 @@
 </template>
 
 <script>
-import {kolamUrl, logaksiUrl, getHeader} from '../../config'
+import {kolamUrl, produksiUrl, getHeader} from '../../config'
 import axios from 'axios'
 export default {
   data: function(){
@@ -89,13 +88,14 @@ export default {
         var app = this;
         axios.get(kolamUrl, {headers: getHeader()})
         .then(function(response){
-          app.kolam=response.data;
+          app.kolam=response.data.data;
           //console.log(app.kolam)
         })
       },
-      getProduksi: function(key){
-        console.log(this.selectedAksi)
+      getProduksi: function(event){
+        //console.log(this.selectedAksi)
         var app = this;
+        var key = event.target.value
         var prodUrl = kolamUrl + '/' + key + '/produksi';
         axios.get(prodUrl, {headers: getHeader()})
         .then(function(response){
@@ -104,12 +104,21 @@ export default {
           //console.log(app.prod)
         })
       },
+      selectProd: function(event){
+        this.selectedProd = event.target.value
+      },
+      selectAksi: function(event){
+        this.selectedAksi = event.target.value
+      },
       postLogaksi: function(){
         const postData ={
-          id_aksi: this.selectedAksi,
-          id_produksi: this.selectedProd
+          id_aksi: this.selectedAksi
         }
-        axios.post(logaksiUrl, postData, {headers: getHeader()})
+      var izinUrl = produksiUrl + '/' + this.selectedProd + '/perizinan'
+        axios.post(izinUrl, postData, {headers: getHeader()})
+        .then(function(response){
+          console.log(response)
+        })
         this.perizinansukses();
       },
       perizinansukses: function() {

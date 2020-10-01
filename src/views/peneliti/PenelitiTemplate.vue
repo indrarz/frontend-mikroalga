@@ -76,6 +76,12 @@
                   <p>Log Data</p>
           </router-link>
               </li>
+              <li class="nav-item">
+          <router-link to="/peneliti/logaksi" class="nav-link">
+                 <i class="nav-icon fas fa-history"></i>
+                  <p>Log Aksi</p>
+          </router-link>
+              </li>
           <li class="nav-item">
                 <router-link to="/peneliti/akun" class="nav-link">
                   <i class="nav-icon fas fa-cog"></i>
@@ -108,12 +114,13 @@
 </template>
 
 <script>
-import {getHeader, apiDomain, userUrl} from '../../config'
+import {getHeader, apiDomain, userUrl, refreshUrl} from '../../config'
 import axios from 'axios'
 export default {
         data: function () {
         return {
-          datas: []
+          datas: [],
+          temp: null
         }
     },
   methods:{
@@ -121,7 +128,7 @@ export default {
       const logoutUrl = apiDomain+'api/auth/logout';
       axios.get(logoutUrl,{headers: getHeader()})
       .then(response =>{
-        window.localStorage.removeItem('authUser');
+        window.sessionStorage.removeItem('authUser');
         console.log(response);
         this.$router.push('/')
       })
@@ -137,10 +144,22 @@ export default {
         .catch(function (error) {
             console.log(error.message);
         });
+    },
+    refresh: function(){
+      var app = this
+      const authUser = {}
+      axios.get(refreshUrl, {headers: getHeader()})
+      .then(function(response){
+        authUser.access_token = response.data.access_token
+        window.sessionStorage.setItem('authUser', JSON.stringify(authUser))
+      })
+      app.temp = setTimeout(()=>{this.refresh()}, 1800000)
     }
   },
   created(){
     this.getMe();
-  }
+    setTimeout(()=>{this.refresh()}, 1800000)   
+
+}
 }
 </script>

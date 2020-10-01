@@ -1,10 +1,7 @@
 <template>
-  <div class="content-wrapper">
+      <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-
-      </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -23,36 +20,36 @@
                 <div class="card card-primary card-outline">
                   <div class="card-header">
                     <h3 class="card-title">
-                      <i class="far fa-clipboard"></i>
-                       User Management
+                      <i class="fas fa-history"></i>
+                      Log Aksi
                     </h3>
-    
                   </div>
                   <div class="card-body">
-                <button type="button" class="btn btn-primary" @click="register()" >Registrasi Akun</button>
-                    <br/>
-                    <table id="example2" class="table table-bordered table-hover">
+                              <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                       <th>Nama</th>
+                                      <!--<th>Jam</th>-->
                                       <th>Email</th>
-                                      <th>Role</th>
-                                      <th>Status</th>
                                       <th>Aksi</th>
+                                      <th>Tanggal</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                      <tr v-for="(data,index) in data.data" :key="data.id">
-                                      <td>{{data.nama}}</td>
-                                      <td>{{data.email}}</td>
-                                      <td v-if="data.id_role === 1">Admin</td>
-                                      <td v-else-if="data.id_role === 2">Peneliti</td>
-                                      <td v-else-if="data.id_role === 3">Operator</td>
-                                      <td v-if="data.deleted_at === null">Aktif</td>
-                                      <td v-else>Nonaktif</td>
-                                      <td v-if="row[index] === 0"><button type="button" class="btn btn-block btn-danger btn-sm" @click="deleteUser(data.id, index)">Nonaktifkan Akun</button></td>
-                                      <td v-else><button type="button" class="btn btn-block btn-success btn-sm" @click="restoreUser(data.id, index)">Aktifkan Akun</button></td>
-                                      </tr>
+                                    <tr v-for="data in data.data" :key="data.id">
+                                      <td>{{data.user.nama}}</td>
+                                      <!--<td>00.00.00</td>-->
+                                      <td>{{data.user.email}}</td>
+                                      <td v-if="data.id_aksi==1108">Mengunduh log sensor</td>
+                                      <td v-else-if="data.id_aksi==1211">Menyalakan pompa air</td>
+                                      <td v-else-if="data.id_aksi==1212">Mematikan pompa air</td>
+                                      <td v-else-if="data.id_aksi==1221">Menyalakan pompa nutrisi</td>
+                                      <td v-else-if="data.id_aksi==1222">Mematikan pompa nutrisi</td>
+                                      <td v-else-if="data.id_aksi==1231">Menyalakan pompa pemanenan</td>
+                                      <td v-else-if="data.id_aksi==1232">Mematikan pompa pemanenan</td>
+                                      <td>{{data.created_at}}</td>
+                                    </tr>
+                                                                               
                                     </tbody>
                                   </table>
                                   <div class="text-center mt-5">
@@ -64,6 +61,9 @@
                                    </div>
                   </div>
                   <!-- /.card-body-->
+                  <div class="card-footer">
+                    
+                  </div>
                 </div>
                 <!-- /.card -->
     
@@ -77,18 +77,18 @@
 </template>
 
 <script>
-import {getHeader, usersUrl} from '../../config'
+import {getHeader, logaksiUrl} from '../../config'
 import axios from 'axios'
+import moment from 'moment'
 export default {
 
     data: function () {
         return {
           data: [],
-          hide_del: [],
-          hide_res: [],
-          row: [],
+          kolam: [],
+          prod: [],
           current_page: '',
-          last_page: '',
+          last_page: 0,
           hidefirst: true,
           hidelast: true
         }
@@ -97,11 +97,11 @@ export default {
     methods: {
       next: function(){
         var app = this
-        var nextUrl = app.data.next_page_url
+        var logUrl = app.data.next_page_url
         app.data = []
-        axios.get(nextUrl, {headers: getHeader()})
+        axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
-            app.prod = response.data.data;
+            app.data = response.data.data;
             //console.log(app.data.next_page_url)
             app.last_page = app.data.last_page
             app.current_page = app.data.current_page
@@ -111,6 +111,11 @@ export default {
             else{
               app.hidefirst = false
             }
+            for (let i = 0; i < app.data.data.length; i++) {
+              var temp = app.data.data[i].created_at
+              app.data.data[i].created_at = moment(temp).format("DD MMMM YYYY, h:mm:ss a");
+              temp = null
+            }
         })
         .catch(function (error) {
             console.log(error.message);
@@ -118,16 +123,21 @@ export default {
       },
       last: function(){
         var app = this
-        var lastUrl = app.data.last_page_url
+        var logUrl = app.data.last_page_url
         app.data = []
-        axios.get(lastUrl, {headers: getHeader()})
+        axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
-            app.prod = response.data.data;
-            //console.log(app.data.next_page_url)
+            app.data = response.data.data;
+            console.log(app.data.next_page_url)
             app.last_page = app.data.last_page
             app.current_page = app.data.current_page
             app.hidelast = true
             app.hidefirst = false
+            for (let i = 0; i < app.data.data.length; i++) {
+              var temp = app.data.data[i].created_at
+              app.data.data[i].created_at = moment(temp).format("DD MMMM YYYY, h:mm:ss a");
+              temp = null
+            }
         })
         .catch(function (error) {
             console.log(error.message);
@@ -135,12 +145,12 @@ export default {
       },
       prev: function(){
         var app = this
-        var prevUrl = app.data.prev_page_url
+        var logUrl = app.data.prev_page_url
         app.data = []
-        axios.get(prevUrl, {headers: getHeader()})
+        axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
-            app.prod = response.data.data;
-            //console.log(app.data.next_page_url)
+            app.data = response.data.data;
+            console.log(app.data.next_page_url)
             app.last_page = app.data.last_page
             app.current_page = app.data.current_page
             if(app.current_page == 1){
@@ -149,6 +159,11 @@ export default {
             else{
               app.hidelast = false
             }
+            for (let i = 0; i < app.data.data.length; i++) {
+              var temp = app.data.data[i].created_at
+              app.data.data[i].created_at = moment(temp).format("DD MMMM YYYY, h:mm:ss a");
+              temp = null
+            }
         })
         .catch(function (error) {
             console.log(error.message);
@@ -156,88 +171,57 @@ export default {
       },
       first: function(){
         var app = this
-        var firstUrl = app.data.first_page_url
+        var logUrl = app.data.first_page_url
         app.data = []
-        axios.get(firstUrl, {headers: getHeader()})
+        axios.get(logUrl, {headers: getHeader()})
             .then(function (response) {
-            app.prod = response.data.data;
-            //console.log(app.data.next_page_url)
+            app.data = response.data.data;
+            console.log(app.data.next_page_url)
             app.last_page = app.data.last_page
             app.current_page = app.data.current_page
             app.hidefirst = true
             app.hidelast = false
+            for (let i = 0; i < app.data.data.length; i++) {
+              var temp = app.data.data[i].created_at
+              app.data.data[i].created_at = moment(temp).format("DD MMMM YYYY, h:mm:ss a");
+              temp = null
+            }
         })
         .catch(function (error) {
             console.log(error.message);
         });
       },
 
-      deleteUser: function(key,x){
-        //window.console.log('id delete' + key)
-        const delUrl = usersUrl + '/' + key;
-        axios.delete(delUrl, {headers: getHeader()});
-        this.makeToast('danger');
-        this.row.splice(x,1,1);
-        //this.getUsers();
-      },
-      restoreUser: function(key,x){
-        //window.console.log('id delete' + key)
-        const resUrl = usersUrl + '/' + key + '/restore';
-        axios.put(resUrl, key, {headers: getHeader()});
-        this.makeToast('success');
-        this.row.splice(x,1,0)
-      },
-      register: function(){
-        this.$router.push('/admin/register')
-      },
-      getUsers: function() {
 
+      getLog: function() {
         var app = this;
-        app.row = [];
-         axios.get(usersUrl, {headers: getHeader()})
+        app.data = []
+        
+         axios.get(logaksiUrl, {headers: getHeader()})
             .then(function (response) {
             app.data = response.data.data;
-            app.current_page = response.data.data.current_page
-            app.last_page = response.data.data.last_page
+            app.current_page = app.data.current_page
+            app.last_page = app.data.last_page
             if(app.current_page != app.last_page){ 
-              app.hidelast = false
-              }
-            for (let index = 0; index < app.data.data.length; index++) {
-              if(app.data.data[index].deleted_at == null){
-                app.row.push(0)
-              }
-              else{
-                app.row.push(1)
-              }
-              
+            app.hidelast = false
             }
-            //console.log(app.data);
+            for (let i = 0; i < app.data.data.length; i++) {
+              var temp = app.data.data[i].created_at
+              app.data.data[i].created_at = moment(temp).format("DD MMMM YYYY, h:mm:ss a");
+              temp = null
+            }
         })
         .catch(function (error) {
             console.log(error.message);
         });
 
-      },
-      makeToast: function(variant) {
-        if(variant == 'success'){
-          this.$bvToast.toast('Akun berhasil diaktifkan kembali', {
-          title: 'Notifikasi',
-          variant: variant,
-          solid: true
-        })
-        } else{
-          this.$bvToast.toast('Akun berhasil dinonaktifkan', {
-          title: 'Notifikasi',
-          variant: variant,
-          solid: true
-        })
-        }
-      }
 
+      }
     },
 
     created() {
-      this.getUsers();
+      this.getLog();
+      //this.getUsers();
     }
 
     }

@@ -51,17 +51,11 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-         <li class="nav-item">
-                <router-link to="/admin" class="nav-link">
-                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
-                </router-link>
-              </li>
         <li class="nav-item">
-                <router-link to="/admin/usermanagement" class="nav-link">
+                <a href="/admin" class="nav-link">
                   <i class="nav-icon fas fa-clipboard"></i>
                   <p>User Management</p>
-                </router-link>
+                </a>
               </li>
         <li class="nav-item">
                 <router-link to="/admin/mikroalga" class="nav-link">
@@ -105,12 +99,13 @@
 </template>
 
 <script>
-import {getHeader, apiDomain, userUrl} from '../../config'
+import {getHeader, apiDomain, userUrl, refreshUrl} from '../../config'
 import axios from 'axios'
 export default {
       data: function () {
         return {
-          datas: []
+          datas: [],
+          temp: null
         }
     },
   methods:{
@@ -118,9 +113,10 @@ export default {
       const logoutUrl = apiDomain+'api/auth/logout';
       axios.get(logoutUrl,{headers: getHeader()})
       .then(response =>{
-        window.localStorage.removeItem('authUser');
-        window.localStorage.removeItem('role');
+        window.sessionStorage.removeItem('authUser');
+        window.sessionStorage.removeItem('role');
         console.log(response);
+        clearTimeout(this.temp)
         this.$router.push('/')
       })
     },
@@ -135,10 +131,22 @@ export default {
         .catch(function (error) {
             console.log(error.message);
         });
+    },
+    refresh: function(){
+      var app = this
+      const authUser = {}
+      axios.get(refreshUrl, {headers: getHeader()})
+      .then(function(response){
+        authUser.access_token = response.data.access_token
+        window.sessionStorage.setItem('authUser', JSON.stringify(authUser))
+      })
+      app.temp = setTimeout(()=>{this.refresh()}, 1800000)
     }
   },
   created(){
     this.getMe();
+    setTimeout(()=>{this.refresh()}, 1800000)   
+    
   }
 }
 </script>

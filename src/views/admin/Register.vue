@@ -54,7 +54,7 @@
                     <!-- /.card-body -->
     
                     <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <button type="submit" class="btn btn-primary">Register</button>
                     </div>
                   </form>
                   <!-- /.card-body-->
@@ -97,7 +97,7 @@ export default{
           console.log(response);
           this.makeToast('success');
           this.register = null
-          //this.$router.push('/admin/usermanagement')
+          setTimeout(()=>{this.$router.push('/admin')}, 3000)   
 
         })
     },

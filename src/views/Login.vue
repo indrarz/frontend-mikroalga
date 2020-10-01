@@ -87,12 +87,12 @@ export default{
           if (response.status === 200){
             //console.log('Oauth token', response)
             authUser.access_token = response.data.access_token
-            window.localStorage.setItem('authUser', JSON.stringify(authUser))
+            window.sessionStorage.setItem('authUser', JSON.stringify(authUser))
             axios.get(userUrl, {headers: getHeader()})
               .then(response =>{
                 //console.log('user object', response)
                 authUser.id_role = response.data.id_role
-                window.localStorage.setItem('role', JSON.stringify(authUser.id_role))
+                window.sessionStorage.setItem('role', JSON.stringify(authUser.id_role))
                 //this.$router.push('/admin')
                 if(authUser.id_role === 1){
                   this.$router.push('/admin')
@@ -106,7 +106,7 @@ export default{
               })
           }
         })
-      const isauthUser = JSON.parse(window.localStorage.getItem('authUser'))
+      const isauthUser = JSON.parse(window.sessionStorage.getItem('authUser'))
       if(!isauthUser){
         setTimeout(() => {
           app.isLoading = false

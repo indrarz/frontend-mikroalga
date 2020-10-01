@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 //import Cookies from 'js-cookie'
-import Admin from '../views/admin/Dashboard.vue'
+//import Admin from '../views/admin/Dashboard.vue'
 import AdminTemplate from '../views/admin/AdminTemplate.vue'
 import UserManagement from '../views/admin/UserManagement.vue'
 import Register from '../views/admin/Register.vue'
@@ -14,6 +14,7 @@ import LogDataPeneliti from '../views/peneliti/LogData.vue'
 import Perizinan from '../views/peneliti/Perizinan.vue'
 import Produksi from '../views/peneliti/Produksi.vue'
 import AkunPeneliti from '../views/peneliti/Akun.vue'
+import Logaksi from '../views/peneliti/LogAksi.vue'
 import OperatorTemplate from '../views/operator/OperatorTemplate.vue'
 import Operator from '../views/operator/Dashboard.vue'
 import LogDataOperator from '../views/operator/LogData.vue'
@@ -30,15 +31,13 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Login',
     component: Login,
+    meta:{noAuth: true}
   },
   {
     path: '/admin',
     component: AdminTemplate,
     children: [
       {path: '',
-      component: Admin,
-      meta: {requiresAuth: true, isAdmin: true}},
-      {path: 'usermanagement',
       component: UserManagement,
       meta: {requiresAuth: true, isAdmin: true}},
       {path: 'register',
@@ -75,6 +74,9 @@ Vue.use(VueRouter)
       meta: {requiresAuth: true, isPeneliti: true}},
       {path: 'akun',
       component: AkunPeneliti,
+      meta: {requiresAuth: true, isPeneliti: true}},
+      {path: 'logaksi',
+      component: Logaksi,
       meta: {requiresAuth: true, isPeneliti: true}}
     ],
     meta: {requiresAuth: true, isPeneliti: true}
@@ -125,8 +127,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   //console.log(from)
   if(to.meta.requiresAuth){
-    const authUser = JSON.parse(window.localStorage.getItem('authUser'))
-    const role = JSON.parse(window.localStorage.getItem('role'))
+    const authUser = JSON.parse(window.sessionStorage.getItem('authUser'))
+    const role = JSON.parse(window.sessionStorage.getItem('role'))
     if(authUser && authUser.access_token){
       if((to.meta.isAdmin && role != 1) || (to.meta.isPeneliti && role != 2) || (to.meta.isOperator && role != 3)){
         (next({name: 'Error'}))
@@ -136,6 +138,23 @@ router.beforeEach((to, from, next) => {
       }
     }else{
       (next({name: 'Login'}))}
+  }else if(to.meta.noAuth){
+    const authUser = JSON.parse(window.sessionStorage.getItem('authUser'))
+    const role = JSON.parse(window.sessionStorage.getItem('role'))
+    if(authUser && authUser.access_token){
+      if(role == 1){
+        (next('/admin'))
+      }
+      else if(role == 2){
+        next(('/peneliti'))
+      }
+      else if(role == 3){
+        next(('/operator'))
+      }
+    }
+    else{
+      next()
+    }
   }
   next()
 })

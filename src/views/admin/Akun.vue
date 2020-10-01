@@ -106,6 +106,7 @@ export default {
         var emailUrl = usersUrl + '/' + app.myid + '/email';
         axios.put(emailUrl,emailData, {headers: getHeader()})
         this.emailsukses()
+        //this.$router.push('/admin')
     },
     changePassword: function(){
         var app = this;
@@ -116,6 +117,7 @@ export default {
             var passwordUrl = usersUrl + '/' + app.myid + '/password'
             axios.put(passwordUrl, passwordData, {headers: getHeader()})
             this.passwordsukses()
+            //this.$router.push('/admin')
         }
     },
     emailsukses: function() {

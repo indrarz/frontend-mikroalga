@@ -6,13 +6,9 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Log Data</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Log Data</li>
-            </ol>
+
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -34,8 +30,8 @@
                 <div class="card card-primary card-outline">
                   <div class="card-header">
                     <h3 class="card-title">
-                      <i class="far fa-chart-bar"></i>
-                      Data Mikroalga
+                      <i class="far fas fa-tint"></i>
+                      Data Kolam
                     </h3>
                   </div>
                   <div class="card-body">
@@ -50,19 +46,26 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="kolam in kolam.data" :key="kolam.id">
+                                    <tr v-for="(kolam, index) in kolam.data" :key="kolam.id">
                                       <td>{{kolam.nama_kolam}}</td>
                                       <td v-if="kolam.deleted_at === null">Aktif</td>
                                       <td v-else>Nonaktif</td>
                                       <td><button type="button" class="btn btn-block bg-gradient-success btn-sm" data-toggle="modal" data-target="#modal-edit" @click="getInfoKolam(kolam.id)">Edit</button>
-                                      <button type="button" class="btn btn-block bg-gradient-danger btn-sm" v-if="kolam.deleted_at === null" @click="hapusKolam(kolam.id)">Hapus</button>
-                                      <button type="button" class="btn btn-block bg-gradient-success btn-sm" v-else>Pulihkan</button>
+                                      <button type="button" class="btn btn-block bg-gradient-danger btn-sm" v-if="row[index] === 0" @click="hapusKolam(kolam.id, index)">Hapus</button>
+                                      <button type="button" class="btn btn-block bg-gradient-success btn-sm" v-else @click="restorekolam(kolam.id, index)">Pulihkan</button>
                                       </td>
                                     </tr>
                                     
                                                                                                           
                                     </tbody>
                                   </table>
+                                  <div class="text-center mt-5">
+                                     <b-button v-if="hidefirst==false" variant="light" @click="first()"><i class="fas fa-angle-double-left"></i></b-button>
+                                     <b-button v-if="hidefirst==false" class="mr-3" variant="light" @click="prev()"><i class="fas fa-angle-left"></i></b-button>
+                                     <span>{{current_page}}</span>
+                                     <b-button v-if="hidelast==false" class="ml-3" variant="light" @click="next()"><i class="fas fa-angle-right"></i></b-button>
+                                     <b-button v-if="hidelast==false" variant="light" @click="last()"><i class="fas fa-angle-double-right"></i></b-button>
+                                   </div>
                   </div>
                   <!-- /.card-body-->
                 </div>
@@ -105,7 +108,7 @@
         <!-- /.modal-dialog -->
       </div>
         <!--Add Kolam Modal-->
-    <div class="modal fade" id="modal-add">
+      <div class="modal fade" id="modal-add">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -151,19 +154,113 @@ export default {
         return {
           kolam: [],
           edit: [],
+          row: [],
           add:{
             nama_kolam: ''
-          }
+          },
+          current_page: '',
+          last_page: '',
+          hidefirst: true,
+          hidelast: true
         }
     },
 
     methods: {
-      getKolam: function(){
+       next: function(){
+        var app = this
+        var nextUrl = app.data.next_page_url
+        app.data = []
+        axios.get(nextUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            if(app.current_page == app.data.last_page){
+              app.hidelast = true
+            }
+            else{
+              app.hidefirst = false
+            }
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      last: function(){
+        var app = this
+        var lastUrl = app.data.last_page_url
+        app.data = []
+        axios.get(lastUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            app.hidelast = true
+            app.hidefirst = false
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      prev: function(){
+        var app = this
+        var prevUrl = app.data.prev_page_url
+        app.data = []
+        axios.get(prevUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            if(app.current_page == 1){
+              app.hidefirst = true
+            }
+            else{
+              app.hidelast = false
+            }
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      first: function(){
+        var app = this
+        var firstUrl = app.data.first_page_url
+        app.data = []
+        axios.get(firstUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            app.hidefirst = true
+            app.hidelast = false
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      getKolam: function(){ 
         var app = this;
         axios.get(kolamUrl, {headers: getHeader()})
         .then(function(response){
           app.kolam=response.data.data;
-          console.log(app.kolam);
+          app.current_page = response.data.data.current_page
+            app.last_page = response.data.data.last_page
+            if(app.current_page != app.last_page){ 
+              app.hidelast = false
+              }
+          for (let index = 0; index < app.kolam.data.length; index++) {
+            if(app.kolam.data[index].deleted_at == null){
+            app.row.push(0)
+            }
+            else{
+              app.row.push(1)
+            }
+          }
+          //console.log(app.kolam);
         })
       },
       getInfoKolam: function(key){
@@ -186,6 +283,13 @@ export default {
           axios.put(editUrl, editData, {headers: getHeader()})
           this.editsukses();
       },
+      restorekolam: function(key, x){
+        //window.console.log('id delete' + key)
+        const resUrl = kolamUrl + '/' + key + '/restore';
+        axios.put(resUrl, key, {headers: getHeader()});
+        this.restoresukses();
+        this.row.splice(x, 1, 0)
+      },
       addKolam: function(){
         const addData = {
               nama_kolam: this.add.nama_kolam,
@@ -194,10 +298,11 @@ export default {
           
           this.addsukses();
       },
-      hapusKolam: function(key){
+      hapusKolam: function(key, x){
         var delUrl = kolamUrl + '/' + key;
         axios.delete(delUrl, {headers: getHeader()})
         this.delsukses();
+        this.row.splice(x,1,1)
       },
       addsukses: function() {
           this.$bvToast.toast('Kolam Berhasil Ditambahkan', {
@@ -209,6 +314,13 @@ export default {
       },
       editsukses: function() {
         this.$bvToast.toast('Informasi Kolam Berhasil Diubah', {
+          title: 'Notifikasi',
+          variant: 'success',
+          solid: true
+        })
+      },
+      restoresukses: function() {
+        this.$bvToast.toast('Informasi Kolam Berhasil Dipulihkan', {
           title: 'Notifikasi',
           variant: 'success',
           solid: true
