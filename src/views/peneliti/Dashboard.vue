@@ -540,7 +540,7 @@
             app.markers[i]["visible"] = false;
           }
           axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + app.latitude + ',' + app.longitude + 
-          '&key=AIzaSyBX84hrSDCSsrgmPo5X_PcRx-0zOYrbUzM')
+          '&key=GoogleMapsAPIKey')
           .then(response => {
             app.address = response.data.results[0].formatted_address;
           })
