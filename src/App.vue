@@ -1,12 +1,15 @@
 <template>
   <div id="app">
     <router-view/>
+    <GoogleMap />
   </div>
 </template>
 
 <script>
-
+  
 </script>
+
+
 
 <style scoped>
 @import url("./assets/plugins/fontawesome-free/css/all.min.css");

@@ -33,7 +33,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
-    <a href="home.html" class="brand-link navbar-success">
+    <a href="admin" class="brand-link navbar-success">
       <span class="brand-text font-weight-light">Smart Algae Pond</span>
     </a>
 
@@ -42,7 +42,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a href="#" class="d-block">ADMIN</a>
+          <a class="d-block">ADMIN</a>
         </div>
       </div>
 
@@ -84,7 +84,7 @@
 <router-view></router-view>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy;2020 Ilmu Komputer IPB.</strong>
+    <strong>Copyright &copy;2022 Ilmu Komputer IPB.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
     </div>
