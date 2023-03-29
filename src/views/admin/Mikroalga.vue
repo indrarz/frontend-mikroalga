@@ -31,11 +31,12 @@
                               <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                      <th>Nama Spesies</th>
-                                      <th>Suhu Air Optimal</th>
+                                      <th>Nama Spesies Mikroalga</th>
+                                      <th>Suhu Air Optimal (°C)</th>
                                       <th>pH Optimal</th>
-                                      <th>Intensitas Cahaya Optimal</th>
-                                      <th>Waktu Panen</th>
+                                      <th>Intensitas Cahaya Optimal (Lux)</th>
+                                      <th>Kekeruhan Minimum (NTU)</th>
+                                      <th>Waktu Panen (Hari)</th>
                                       <th>Aksi</th>
                                     </tr>
                                     </thead>
@@ -45,6 +46,7 @@
                                       <td>{{mikroalga.suhu_air_optimal}}</td>
                                       <td>{{mikroalga.ph_optimal}}</td>
                                       <td>{{mikroalga.intensitas_cahaya_optimal}}</td>
+                                      <td>{{mikroalga.tingkat_kekeruhan}}</td>
                                       <td>{{mikroalga.waktu_panen}}</td>
                                       <td><button type="button" class="btn btn-block bg-gradient-success btn-sm" data-toggle="modal" data-target="#modal-edit" @click="getAlga(mikroalga.id)">Edit</button>
                                       <button type="button" class="btn btn-block bg-gradient-danger btn-sm" v-if="row[index] === 0" @click="delAlga(mikroalga.id, index)">Hapus</button>
@@ -87,39 +89,45 @@
                   <div class="form-group">
                       <label>Nama Spesies</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control" v-model="data.nama_spesies">
+                          <input type="text" class="form-control" v-model="data.nama_spesies" required>
                       </div>
                   </div>
                   <div class="form-group">
                       <label>Suhu Air Optimal</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="data.suhu_air_optimal">
+                          <input type="number" class="form-control"  v-model="data.suhu_air_optimal" required>
                       </div>
                   </div>
                   <div class="form-group">
                       <label>pH Optimal</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="data.ph_optimal">
+                          <input type="number" class="form-control"  v-model="data.ph_optimal" required>
                       </div>
                   </div>
                   <input type='hidden' v-model="data.id">
                   <div class="form-group">
                       <label>Intensitas Cahaya Optimal</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="data.intensitas_cahaya_optimal">
+                          <input type="number" class="form-control"  v-model="data.intensitas_cahaya_optimal" required>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label>Kekeruhan Minimum</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="form-control"  v-model="data.tingkat_kekeruhan" required>
                       </div>
                   </div>
                   <div class="form-group">
                       <label>Waktu Panen</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="data.waktu_panen">
+                          <input type="number" class="form-control"  v-model="data.waktu_panen" required>
                       </div>
                   </div>
               
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" @click="editAlga()" data-dismiss="modal">Save changes</button>
+              <button type="submit" class="btn btn-primary" @click="editAlga()" data-dismiss="modal">Simpan</button>
             </div>
             </form>
           </div>
@@ -142,31 +150,37 @@
                   <div class="form-group">
                       <label>Nama Spesies</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control" v-model="add.nama_spesies">
+                          <input type="text" class="form-control" v-model="add.nama_spesies" required>
                       </div>
                   </div>
                   <div class="form-group">
                       <label>Suhu Air Optimal</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="add.suhu_air_optimal">
+                          <input type="number" class="form-control"  v-model="add.suhu_air_optimal" required>
                       </div>
                   </div>
                   <div class="form-group">
                       <label>pH Optimal</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="add.ph_optimal">
+                          <input type="number" class="form-control"  v-model="add.ph_optimal" required>
                       </div>
                   </div>
                   <div class="form-group">
                       <label>Intensitas Cahaya Optimal</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="add.intensitas_cahaya_optimal">
+                          <input type="number" class="form-control"  v-model="add.intensitas_cahaya_optimal" required>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label>Kekeruhan Minimum</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="form-control"  v-model="add.tingkat_kekeruhan" required>
                       </div>
                   </div>
                   <div class="form-group">
                       <label>Waktu Panen</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control"  v-model="add.waktu_panen">
+                          <input type="number" class="form-control"  v-model="add.waktu_panen" required>
                       </div>
                   </div>
               
@@ -200,11 +214,11 @@ export default {
           row: [],
           add: {
             nama_spesies: '',
-              suhu_air_optimal: '',
-              ph_optimal: '',
-              intensitas_cahaya_optimal: '',
-              waktu_panen: '',
-              
+            suhu_air_optimal: '',
+            ph_optimal: '',
+            intensitas_cahaya_optimal: '',
+            tingkat_kekeruhan: '',
+            waktu_panen: '',
           },
           current_page: '',
           last_page: '',
@@ -309,6 +323,7 @@ export default {
               suhu_air_optimal: this.data.suhu_air_optimal,
               ph_optimal: this.data.ph_optimal,
               intensitas_cahaya_optimal: this.data.intensitas_cahaya_optimal,
+              tingkat_kekeruhan: this.data.tingkat_kekeruhan,
               waktu_panen: this.data.waktu_panen
           }
           var editUrl = mikroalgaUrl + '/' + this.data.id
@@ -317,16 +332,23 @@ export default {
           this.getMikroalga();
           
       },
-      addAlga: function(){
+      async addAlga(){
         const addData = {
               nama_spesies: this.add.nama_spesies,
               suhu_air_optimal: this.add.suhu_air_optimal,
               ph_optimal: this.add.ph_optimal,
               intensitas_cahaya_optimal: this.add.intensitas_cahaya_optimal,
+              tingkat_kekeruhan: this.add.tingkat_kekeruhan,
               waktu_panen: this.add.waktu_panen
           }
-          axios.post(mikroalgaUrl, addData, {headers: getHeader()})
-          this.addsukses();
+          try {
+            await axios.post(mikroalgaUrl, addData, {headers: getHeader()});
+            this.addsukses();
+          } catch (error) {
+            this.addgagal();
+          }
+          // axios.post(mikroalgaUrl, addData, {headers: getHeader()})
+          // this.addsukses();
           this.getMikroalga();
           
       },
@@ -382,6 +404,13 @@ export default {
           solid: true
         })
         
+      },
+      addgagal: function() {
+          this.$bvToast.toast('Mikroalga Gagal Ditambahkan', {
+          title: 'Notifikasi',
+          variant: 'danger',
+          solid: true
+        })
       },
       editsukses: function() {
         this.$bvToast.toast('Informasi Mikroalga Berhasil Diubah', {

@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 //import Cookies from 'js-cookie'
-//import Admin from '../views/admin/Dashboard.vue'
 import AdminTemplate from '../views/admin/AdminTemplate.vue'
-import UserManagement from '../views/admin/UserManagement.vue'
+import Admin from '../views/admin/Dashboard.vue'
+import UserManagement from '../views/admin/Management.vue'
 import Register from '../views/admin/Register.vue'
 import Mikroalga from '../views/admin/Mikroalga.vue'
 import Kolam from '../views/admin/Kolam.vue'
 import AkunAdmin from '../views/admin/Akun.vue'
+import About from '../views/admin/About.vue'
 import PenelitiTemplate from '../views/peneliti/PenelitiTemplate.vue'
 import Peneliti from '../views/peneliti/Dashboard.vue'
 import LogDataPeneliti from '../views/peneliti/LogData.vue'
@@ -15,12 +16,14 @@ import Perizinan from '../views/peneliti/Perizinan.vue'
 import Produksi from '../views/peneliti/Produksi.vue'
 import AkunPeneliti from '../views/peneliti/Akun.vue'
 import Logaksi from '../views/peneliti/LogAksi.vue'
+import AboutPeneliti from '../views/peneliti/About.vue'
 import OperatorTemplate from '../views/operator/OperatorTemplate.vue'
 import Operator from '../views/operator/Dashboard.vue'
 import LogDataOperator from '../views/operator/LogData.vue'
 import ProduksiOperator from '../views/operator/Produksi.vue'
 import AkunOperator from '../views/operator/Akun.vue'
 import IzinOperator from '../views/operator/Perizinan.vue'
+import AboutOperator from '../views/operator/About.vue'
 import Login from '../views/Login.vue'
 import Errorpage from '../views/Error.vue'
 
@@ -38,6 +41,9 @@ Vue.use(VueRouter)
     component: AdminTemplate,
     children: [
       {path: '',
+      component: Admin,
+      meta: {requiresAuth: true, isAdmin: true}},
+      {path: 'usermanagement',
       component: UserManagement,
       meta: {requiresAuth: true, isAdmin: true}},
       {path: 'register',
@@ -51,6 +57,9 @@ Vue.use(VueRouter)
       meta: {requiresAuth: true, isAdmin: true}},
       {path: 'akun',
       component: AkunAdmin,
+      meta: {requiresAuth: true, isAdmin: true}},
+      {path: 'about',
+      component: About,
       meta: {requiresAuth: true, isAdmin: true}}
       
     ],
@@ -77,6 +86,9 @@ Vue.use(VueRouter)
       meta: {requiresAuth: true, isPeneliti: true}},
       {path: 'logaksi',
       component: Logaksi,
+      meta: {requiresAuth: true, isPeneliti: true}},
+      {path: 'about',
+      component: AboutPeneliti,
       meta: {requiresAuth: true, isPeneliti: true}}
     ],
     meta: {requiresAuth: true, isPeneliti: true}
@@ -99,6 +111,9 @@ Vue.use(VueRouter)
       meta: {requiresAuth: true, isOperator: true}},
       {path: 'perizinan',
       component: IzinOperator,
+      meta: {requiresAuth: true, isOperator: true}},
+      {path: 'about',
+      component: AboutOperator,
       meta: {requiresAuth: true, isOperator: true}}
     ],
     meta: {requiresAuth: true, isOperator: true}

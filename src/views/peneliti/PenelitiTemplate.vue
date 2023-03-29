@@ -16,12 +16,17 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <span v-for="data in datas" :key="data.id">{{data.nama}}</span>
+          <i class="fas fa-user"></i>
+          <span v-for="data in datas" :key="data.id"> {{data.nama}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <router-link to="/peneliti/akun" style="cursor: pointer;" class="dropdown-item">
+            <i class="fas fa-cog"></i>
+            <span> Pengaturan Akun</span>
+          </router-link>
           <a style="cursor: pointer;" @click="logout" class="dropdown-item">
             <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
+            <span> Logout</span>
           </a>
         </div>
       </li>
@@ -35,7 +40,7 @@
   <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
     <a href="peneliti" class="brand-link navbar-success">
-      <span class="brand-text font-weight-light">Smart Algae Pond</span>
+      <b-img src="./../../assets/SBRC.png" fluid alt="Responsive image"></b-img>
     </a>
 
     <!-- Sidebar -->
@@ -43,7 +48,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a class="d-block">PENELITI</a>
+          <a class="d-block">SMART ALGAE POND</a>
         </div>
       </div>
 
@@ -76,16 +81,16 @@
                   <p>Log Data</p>
           </router-link>
               </li>
-              <li class="nav-item">
+        <li class="nav-item">
           <router-link to="/peneliti/logaksi" class="nav-link">
                  <i class="nav-icon fas fa-history"></i>
                   <p>Log Aksi</p>
           </router-link>
               </li>
-          <li class="nav-item">
-                <router-link to="/peneliti/akun" class="nav-link">
-                  <i class="nav-icon fas fa-cog"></i>
-                  <p>Pengaturan Akun</p>
+        <li class="nav-item">
+                <router-link to="/peneliti/about" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>About Us</p>
                 </router-link>
               </li>
         </ul>
@@ -99,7 +104,7 @@
 <router-view></router-view>>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy;2022 Ilmu Komputer IPB.</strong>
+    <strong>Copyright &copy;2023 Ilmu Komputer IPB.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
     </div>

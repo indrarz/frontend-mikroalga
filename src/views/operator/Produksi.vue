@@ -42,6 +42,7 @@
                       <tr>
                         <th>No. Produksi</th>
                         <th>Spesies Mikroalga</th>
+                        <th>Volume Produksi (L)</th>
                         <th>Waktu Mulai</th>
                         <th>Waktu Selesai</th>
                         <th>Hasil Produksi</th>
@@ -52,6 +53,7 @@
                       <tr v-for="(prod,index) in prod.data" :key="prod.id">
                         <td>Produksi {{prod.id}}</td>
                         <td>{{prod.mikroalga.nama_spesies}}</td>
+                        <td>{{prod.volume_produksi}}</td>
                         <td>{{prod.waktu_mulai}}</td>
                         <td v-if="prod.waktu_selesai === null">-</td>
                         <td v-else>{{prod.waktu_selesai}}</td>
@@ -342,7 +344,8 @@ export default {
       addProduksi: function(){
         const addData ={
           id_kolam : this.selectedKolam,
-          id_mikroalga : this.selectedAlga
+          id_mikroalga : this.selectedAlga,
+          volume_produksi: this.add.volume_produksi,
         }
         axios.post(produksiUrl, addData, {headers: getHeader()})
         this.addsukses();

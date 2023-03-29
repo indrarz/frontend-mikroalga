@@ -15,9 +15,14 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <span v-for="data in datas" :key="data.id">{{data.nama}}</span>
+          <i class="fas fa-user"></i>
+          <span v-for="data in datas" :key="data.id"> {{data.nama}}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <router-link to="/admin/akun" style="cursor: pointer;" class="dropdown-item">
+            <i class="fas fa-cog"></i>
+            <span> Pengaturan Akun</span>
+          </router-link>
           <a style="cursor: pointer;" @click="logout" class="dropdown-item">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
@@ -30,11 +35,11 @@
   </nav>
   <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
+ <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-success elevation-4">
     <!-- Brand Logo -->
-    <a href="admin" class="brand-link navbar-success">
-      <span class="brand-text font-weight-light">Smart Algae Pond</span>
+    <a href="" class="brand-link navbar-success">
+      <b-img src="./../../assets/SBRC.png" fluid alt="Responsive image"></b-img>
     </a>
 
     <!-- Sidebar -->
@@ -42,7 +47,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-          <a class="d-block">ADMIN</a>
+          <a class="d-block">SMART ALGAE POND</a>
         </div>
       </div>
 
@@ -52,11 +57,17 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-                <a href="/admin" class="nav-link">
+                <router-link to="/admin" class="nav-link">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>Dashboard</p>
+                </router-link>
+              </li>
+        <li class="nav-item">
+                <router-link to="/admin/usermanagement" class="nav-link">
                   <i class="nav-icon fas fa-clipboard"></i>
                   <p>User Management</p>
-                </a>
-              </li>
+                </router-link>
+              </li>      
         <li class="nav-item">
                 <router-link to="/admin/mikroalga" class="nav-link">
                  <i class="nav-icon fab fa-envira"></i>
@@ -69,10 +80,10 @@
                   <p>Data Kolam</p>
                 </router-link>
               </li>
-              <li class="nav-item">
-                <router-link to="/admin/akun" class="nav-link">
-                  <i class="nav-icon fas fa-cog"></i>
-                  <p>Pengaturan Akun</p>
+        <li class="nav-item">
+                <router-link to="/admin/about" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>About Us</p>
                 </router-link>
               </li>
         </ul>
@@ -84,7 +95,7 @@
 <router-view></router-view>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy;2022 Ilmu Komputer IPB.</strong>
+    <strong>Copyright &copy;2023 Ilmu Komputer IPB.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
     </div>

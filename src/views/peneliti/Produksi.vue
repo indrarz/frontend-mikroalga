@@ -43,9 +43,10 @@
                       <tr>
                         <th>No. Produksi</th>
                         <th>Spesies Mikroalga</th>
+                        <th>Volume Produksi (L)</th>
                         <th>Waktu Mulai</th>
                         <th>Waktu Selesai</th>
-                        <th>Hasil Produksi</th>
+                        <th>Hasil Produksi (gram)</th>
                         <th>Aksi</th>
                       </tr>
                       </thead>
@@ -53,6 +54,7 @@
                       <tr v-for="prod in prod.data" :key="prod.id">
                         <td>Produksi {{prod.id}}</td>
                         <td>{{prod.mikroalga.nama_spesies}}</td>
+                        <td>{{prod.volume_produksi}}</td>
                         <td>{{prod.waktu_mulai}}</td>
                         <td v-if="prod.waktu_selesai === null">-</td>
                         <td v-else>{{prod.waktu_selesai}}</td>
@@ -113,7 +115,13 @@
                           <option v-for="algas in algas.data" :key="algas.id" v-bind:value="algas.id">{{algas.nama_spesies}}</option>
                           <!--<option value="3  ">Operator</option>-->
                         </select>
-               </div>
+                  </div>
+                  <div class="form-group">
+                      <label>Jumlah Volume Produksi (L)</label>
+                      <div class="col-sm-14">
+                          <input type="number" class="form-control" placeholder="Volume" v-model="add.volume_produksi" required>
+                      </div>
+                  </div>
               
           </div>
             <div class="modal-footer justify-content-between">
@@ -241,6 +249,9 @@ export default {
             hasil:{
               id: '',
               jumlah: ''
+            },
+            add: {
+              volume_produksi: ''
             },
             selectedKolam: '',
             selectedAlga: '',
@@ -380,21 +391,44 @@ export default {
           //console.log(app.namakolam)
           //console.log(app.namaalga)
         })
+        .catch(function (error) {
+            console.log(error.message);
+        });
       },
+
       selectKolam: function(event){
         this.selectedKolam = event.target.value
       },
+
       selectAlga: function(event){
         this.selectedAlga = event.target.value
       },
-      addProduksi: function(){
+
+      async addProduksi(){
         const addData ={
-          id_mikroalga : this.selectedAlga
+          id_mikroalga : this.selectedAlga,
+          volume_produksi: this.add.volume_produksi,
+          // id_peneliti: '2'
         }
         var addUrl = kolamUrl + "/" + this.selectedKolam + '/produksi'
-        axios.post(addUrl, addData, {headers: getHeader()})  
-        this.addsukses();
+        const dataKolam = kolamUrl + "/" + this.selectedKolam
+        const dataKolams = await axios.get(dataKolam, {headers: getHeader()})
+        const vol = dataKolams.data.data.volume_kolam
+        try {
+          if (addData.volume_produksi > vol) {
+            this.addbesar();
+          } else {
+            await axios.post(addUrl, addData, {headers: getHeader()});
+            this.addsukses(); 
+          } 
+        } catch (error) {
+          this.addgagal();
+        }
+        // axios.post(addUrl, addData, {headers: getHeader()})
+        // this.addsukses();
+        this.getProduksi();
       },
+
       doPanen: function(key){
         const postData ={
           mode : "manual",
@@ -413,6 +447,7 @@ export default {
           console.log(response)
         })
       },
+
       stopPanen: function(key){
          const postData ={
           mode : "manual",
@@ -432,6 +467,7 @@ export default {
           console.log(response)
         })
       },
+
       doNutrisi: function(key){
         const postData ={
           mode : "manual",
@@ -450,6 +486,7 @@ export default {
           console.log(response)
         })
       },
+
       stopNutrisi: function(key){
          const postData ={
           mode : "manual",
@@ -469,6 +506,7 @@ export default {
           console.log(response)
         })
       },
+
       doAir: function(key){
         const postData ={
           mode : "manual",
@@ -487,6 +525,7 @@ export default {
           console.log(response)
         })
       },
+
       stopAir: function(key){
          const postData ={
           mode : "manual",
@@ -505,15 +544,18 @@ export default {
           console.log(response)
         })
       },
+
       stopProduksi: function(key){
         var stopUrl = produksiUrl + '/' + key + '/end'
         axios.put(stopUrl, '', {headers: getHeader()})
 
       },
+
       selectProd: function(key){
         this.hasil.id = key
         console.log(key)
       },
+
       hasilProduksi: function(){
         const hasilData ={
           hasil_produksi: this.hasil.jumlah
@@ -524,13 +566,29 @@ export default {
           this.getProduksi(this.selectedKolam)
         })
       },
+      
       addsukses: function() {
           this.$bvToast.toast('Produksi Berhasil Ditambahkan', {
           title: 'Notifikasi',
           variant: 'success',
           solid: true
         })
-        
+      },
+
+      addgagal: function() {
+          this.$bvToast.toast('Produksi Gagal Ditambahkan', {
+          title: 'Notifikasi',
+          variant: 'danger',
+          solid: true
+        })
+      },
+
+      addbesar: function() {
+          this.$bvToast.toast('Volume Produksi Melebihi Kapasitas Kolam', {
+          title: 'Notifikasi',
+          variant: 'danger',
+          solid: true
+        })
       }
     },
 

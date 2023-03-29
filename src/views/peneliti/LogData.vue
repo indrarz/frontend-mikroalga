@@ -48,11 +48,11 @@
                                       <th>Tanggal</th>
                                       <!--<th>Jam</th>-->
                                       <th>pH</th>
-                                      <th>Kekeruhan Air (NTU)</th>
-                                      <th>Kecepatan Air (cm<sup>3</sup>/s)</th>
-                                      <th>Kecepatan Udara (cm/s)</th>
+                                      <th>Kekeruhan (NTU)</th>
+                                      <th>Kecepatan Air (cm/s)</th>
+                                      <th>Intensitas Cahaya (Lux)</th>
                                       <th>Suhu Air (°C)</th>
-                                      <th>Energi (kW/h)</th>
+                                      <th>Kelembapan</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -62,9 +62,9 @@
                                       <td>{{data.ph_air}}</td>
                                       <td>{{data.kekeruhan}}</td>
                                       <td>{{data.kecepatan_air}}</td>
-                                      <td>{{data.aliran_udara}}</td>
+                                      <td>{{data.intensitas_cahaya}}</td>
                                       <td>{{data.suhu_air}}</td>
-                                      <td>{{data.energi_listrik}}</td>
+                                      <td>{{data.kelembapan_udara}}</td>
                                     </tr>
                                                                                
                                     </tbody>

@@ -3,15 +3,6 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
@@ -41,6 +32,7 @@
                                     <thead>
                                     <tr>
                                       <th>Nama Kolam</th>
+                                      <th>Volume Kolam (L)</th>
                                       <th>Status</th>
                                       <th>Aksi</th>
                                     </tr>
@@ -48,6 +40,7 @@
                                     <tbody>
                                     <tr v-for="(kolam, index) in kolam.data" :key="kolam.id">
                                       <td>{{kolam.nama_kolam}}</td>
+                                      <td>{{kolam.volume_kolam}}</td>
                                       <td v-if="kolam.deleted_at === null">Aktif</td>
                                       <td v-else>Nonaktif</td>
                                       <td><button type="button" class="btn btn-block bg-gradient-success btn-sm" data-toggle="modal" data-target="#modal-edit" @click="getInfoKolam(kolam.id)">Edit</button>
@@ -91,7 +84,11 @@
                   <div class="form-group">
                       <label>Nama Kolam</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control" v-model="edit.nama_kolam">
+                          <input type="text" class="form-control" v-model="edit.nama_kolam" required>
+                      </div>
+                      <label>Volume Kolam</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="form-control" v-model="edit.volume_kolam" required>
                       </div>
                   </div>
                   <input type="hidden" v-model="edit.id">
@@ -123,7 +120,11 @@
                   <div class="form-group">
                       <label>Nama Kolam</label>
                       <div class="col-sm-10">
-                          <input type="text" class="form-control" v-model="add.nama_kolam">
+                          <input type="text" class="form-control" v-model="add.nama_kolam" required>
+                      </div>
+                      <label>Volume Kolam</label>
+                      <div class="col-sm-10">
+                          <input type="number" class="form-control" v-model="add.volume_kolam" required>
                       </div>
                   </div>
               
@@ -156,7 +157,8 @@ export default {
           edit: [],
           row: [],
           add:{
-            nama_kolam: ''
+            nama_kolam: '',
+            volume_kolam: ''
           },
           current_page: '',
           last_page: '',
@@ -244,6 +246,7 @@ export default {
       },
       getKolam: function(){ 
         var app = this;
+        app.row = [];
         axios.get(kolamUrl, {headers: getHeader()})
         .then(function(response){
           app.kolam=response.data.data;
@@ -262,6 +265,9 @@ export default {
           }
           //console.log(app.kolam);
         })
+        .catch(function (error) {
+            console.log(error.message);
+        });
       },
       getInfoKolam: function(key){
          var app = this;
@@ -278,10 +284,12 @@ export default {
       editKolam: function(){
         const editData = {
               nama_kolam: this.edit.nama_kolam,
+              volume_kolam: this.edit.volume_kolam,
           }
           var editUrl = kolamUrl + '/' + this.edit.id
           axios.put(editUrl, editData, {headers: getHeader()})
           this.editsukses();
+          this.getKolam();
       },
       restorekolam: function(key, x){
         //window.console.log('id delete' + key)
@@ -290,13 +298,21 @@ export default {
         this.restoresukses();
         this.row.splice(x, 1, 0)
       },
-      addKolam: function(){
+      async addKolam(){
         const addData = {
               nama_kolam: this.add.nama_kolam,
+              volume_kolam: this.add.volume_kolam,
+              id_peneliti: '2'
           }
-          axios.post(kolamUrl, addData, {headers: getHeader()})
-          
-          this.addsukses();
+          try {
+            await axios.post(kolamUrl, addData, {headers: getHeader()});
+            this.addsukses();
+          } catch (error) {
+            this.addgagal();
+          }
+          // axios.post(kolamUrl, addData, {headers: getHeader()})
+          // this.addsukses();
+          this.getKolam();
       },
       hapusKolam: function(key, x){
         var delUrl = kolamUrl + '/' + key;
@@ -311,6 +327,13 @@ export default {
           solid: true
         })
         
+      },
+      addgagal: function() {
+          this.$bvToast.toast('Kolam Gagal Ditambahkan', {
+          title: 'Notifikasi',
+          variant: 'danger',
+          solid: true
+        })
       },
       editsukses: function() {
         this.$bvToast.toast('Informasi Kolam Berhasil Diubah', {

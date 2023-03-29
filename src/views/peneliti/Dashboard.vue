@@ -103,7 +103,7 @@
                        <dt class="col-sm-4">Kekeruhan</dt>
                        <dd class="col-sm-8">{{kekeruhan}} NTU</dd>
                        <dt class="col-sm-4">Kecepatan Air</dt>
-                       <dd class="col-sm-8">{{kecepatan_air}} m/s</dd>
+                       <dd class="col-sm-8">{{kecepatan_air}} cm/s</dd>
                        <dt class="col-sm-4">Kelembapan Udara</dt>
                        <dd class="col-sm-8">{{kelembapan_udara}}</dd>
                        <dt class="col-sm-4">Suhu Udara</dt>
@@ -117,25 +117,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">Suhu Air</dt>
+                             <dt class="col-sm text-center">Suhu Air</dt>
                              <line-chart :data="graph_suhu_air"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{suhu_air_tertinggi}} °C</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{suhu_air_terendah}} °C</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{suhu_air_terendah}} °C</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{suhu_air_ratarata}} °C</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{suhu_air_tertinggi}} °C</dd>
                                    </div>
                                  </div>
                                </div>
@@ -147,25 +156,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">pH Air</dt>
+                             <dt class="col-sm text-center">pH Air</dt>
                              <line-chart :data="graph_ph_air"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{ph_tertinggi}} pH</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{ph_terendah}} pH</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{ph_terendah}} pH</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{ph_ratarata}} pH</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{ph_tertinggi}} pH</dd>
                                    </div>
                                  </div>
                                </div>
@@ -177,25 +195,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">Intensitas Cahaya</dt>
+                             <dt class="col-sm text-center">Intensitas Cahaya</dt>
                              <line-chart :data="graph_intensitas"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{intensitas_tertinggi}} Lux</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{intensitas_terendah}} Lux</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{intensitas_terendah}} Lux</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{intensitas_ratarata}} Lux</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{intensitas_tertinggi}} Lux</dd>
                                    </div>
                                  </div>
                                </div>
@@ -207,25 +234,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">Ketinggian</dt>
+                             <dt class="col-sm text-center">Ketinggian</dt>
                              <line-chart :data="graph_ketinggian"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{ketinggian_tertinggi}} MDPL</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{ketinggian_terendah}} MDPL</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{ketinggian_terendah}} MDPL</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{ketinggian_ratarata}} MDPL</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{ketinggian_tertinggi}} MDPL</dd>
                                    </div>
                                  </div>
                                </div>
@@ -237,25 +273,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">Kekeruhan</dt>
+                             <dt class="col-sm text-center">Kekeruhan</dt>
                              <line-chart :data="graph_kekeruhan"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{kekeruhan_tertinggi}} NTU</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{kekeruhan_terendah}} NTU</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{kekeruhan_terendah}} NTU</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{kekeruhan_ratarata}} NTU</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{kekeruhan_tertinggi}} NTU</dd>
                                    </div>
                                  </div>
                                </div>
@@ -267,25 +312,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">Kecepatan Air</dt>
+                             <dt class="col-sm text-center">Kecepatan Air</dt>
                              <line-chart :data="graph_kecepatan"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{kecepatan_tertinggi}} m/s</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{kecepatan_terendah}} m/s</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{kecepatan_terendah}} cm/s</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{kecepatan_ratarata}} cm/s</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{kecepatan_tertinggi}} cm/s</dd>
                                    </div>
                                  </div>
                                </div>
@@ -297,25 +351,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">Kelembapan Udara</dt>
+                             <dt class="col-sm text-center">Kelembapan Udara</dt>
                              <line-chart :data="graph_kelembapan"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{kelembapan_tertinggi}}</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{kelembapan_terendah}}</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{kelembapan_terendah}}</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{kelembapan_ratarata}}</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{kelembapan_tertinggi}}</dd>
                                    </div>
                                  </div>
                                </div>
@@ -327,25 +390,34 @@
                        <!-- small box -->
                          <div class="small-box">
                            <div class="inner">
-                             <dt class="col-sm-4">Suhu Udara</dt>
+                             <dt class="col-sm text-center">Suhu Udara</dt>
                              <line-chart :data="graph_suhu_udara"></line-chart>
                              <br/>
                              <dl class="row">
-                               <div class="col-sm-6">
-                               <!-- small box -->
-                                 <div class="small-box bg-success">
-                                   <div class="inner">
-                                     <dt class="col-sm-6">Tertinggi</dt>
-                                     <dd class="col-sm-6">{{suhu_udara}} °C</dd>
-                                   </div>
-                                 </div>
-                               </div>
-                               <div class="col-sm-6">
+                               <div class="col-sm-4">
                                <!-- small box -->
                                  <div class="small-box bg-warning">
                                    <div class="inner">
-                                     <dt class="col-sm-6">Terendah</dt>
-                                     <dd class="col-sm-6">{{suhu_udara_terendah}} °C</dd>
+                                     <dt class="col-sm">Terendah</dt>
+                                     <dd class="col-sm">{{suhu_udara_terendah}} °C</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-info">
+                                   <div class="inner">
+                                     <dt class="col-sm">Rata-rata</dt>
+                                     <dd class="col-sm">{{suhu_udara_ratarata}} °C</dd>
+                                   </div>
+                                 </div>
+                               </div>
+                               <div class="col-sm-4">
+                               <!-- small box -->
+                                 <div class="small-box bg-success">
+                                   <div class="inner">
+                                     <dt class="col-sm">Tertinggi</dt>
+                                     <dd class="col-sm">{{suhu_udara_tertinggi}} °C</dd>
                                    </div>
                                  </div>
                                </div>
@@ -367,6 +439,12 @@
                          v-for="(m, index) in markers"
                          :position="m.position"
                        />
+                       <!-- <gmap-info-window
+                         :options="infoOptions"
+                         :position="infoWindowPos"
+                         :opened="infoWinOpen"
+                         @closeclick="infoWinOpen=false"
+                       ></gmap-info-window> -->
                      </GmapMap>
                      <br/>
                      <dl class="row">
@@ -414,8 +492,8 @@
       markers: [
         {
           position: {
-            lat: '',
-            lng: ''
+            lat: -6.5580193,
+            lng: 106.731317
           },
           visible: ''
         }
@@ -430,42 +508,22 @@
       kecepatan_air: '',
       kelembapan_udara: '',
       suhu_udara: '',
-      graph_suhu_air:[],
-      graph_ph_air:[],
-      graph_intensitas:[],
-      graph_ketinggian:[],
-      graph_kekeruhan:[],
-      graph_kecepatan:[],
-      graph_kelembapan:[],
-      graph_suhu_udara:[],
-      suhu_air_tertinggi: '',
-      suhu_air_terendah: '',
-      ph_tertinggi: '',
-      ph_terendah: '',
-      intensitas_tertinggi: '',
-      intensitas_terendah: '',
-      ketinggian_tertinggi: '',
-      ketinggian_terendah: '',
-      kekeruhan_tertinggi: '',
-      kekeruhan_terendah: '',
-      kecepatan_tertinggi: '',
-      kecepatan_terendah: '',
-      kelembapan_tertinggi: '',
-      kelembapan_terendah: '',
-      suhu_udara_tertinggi: '',
-      suhu_udara_terendah: '',
+      graph_suhu_air:[], graph_ph_air:[], graph_intensitas:[], graph_ketinggian:[],
+      graph_kekeruhan:[], graph_kecepatan:[], graph_kelembapan:[], graph_suhu_udara:[],
+      suhu_air_tertinggi: '', suhu_air_terendah: '', suhu_air_ratarata: '',
+      ph_tertinggi: '', ph_terendah: '', ph_ratarata: '',
+      intensitas_tertinggi: '', intensitas_terendah: '', intensitas_ratarata: '',
+      ketinggian_tertinggi: '', ketinggian_terendah: '', ketinggian_ratarata: '',
+      kekeruhan_tertinggi: '', kekeruhan_terendah: '', kekeruhan_ratarata: '',
+      kecepatan_tertinggi: '', kecepatan_terendah: '', kecepatan_ratarata: '',
+      kelembapan_tertinggi: '', kelembapan_terendah: '', kelembapan_ratarata: '',
+      suhu_udara_tertinggi: '', suhu_udara_terendah: '', suhu_udara_ratarata: '',
       isHidden: true,
       rt :null,
       latitude: '',
       longitude: '',
-      address: ''
- 
-      //graphlabel:[]
-      /*chartData: {
-        '2017-05-13' : 2,
-        '2017-05-14' : 5,
-        '2017-05-15' : 4
-      }*/
+      created_at: '',
+      address: 'CPRJ+QFH, Babakan, Kec. Dramaga, Kabupaten Bogor, Jawa Barat 16680, Indonesia'
     }
   },
  
@@ -540,7 +598,7 @@
             app.markers[i]["visible"] = false;
           }
           axios.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + app.latitude + ',' + app.longitude + 
-          '&key=GoogleMapsAPIKey')
+          '&key=AIzaSyBX84hrSDCSsrgmPo5X_PcRx-0zOYrbUzM')
           .then(response => {
             app.address = response.data.results[0].formatted_address;
           })
@@ -582,8 +640,12 @@
         for (let i = 0; i < temp.data.length; i++) {
           var a = []; var b = []; var c = []; var d = [];
           var e = []; var f = []; var g = [];  var h = [];
-          var date = ''
           //console.log(temp.data[i].created_at)
+
+          /*
+          Karena data masih bersifat dummy, untuk uji coba di localhost gunakan kode di bawah
+          
+          var date = ''
           if(i<10){
             date = '2022-07-26 11:11:0' + i
           }
@@ -599,7 +661,19 @@
           f.push(moment(date).format("HH:mm:ss"))
           g.push(moment(date).format("HH:mm:ss"))
           h.push(moment(date).format("HH:mm:ss")) 
-          //x.push(moment(temp.data[i].created_at).format())  
+          */
+
+          // Jika sudah di deploy, gunakan kode di bawah
+
+          a.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+          b.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+          c.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+          d.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+          e.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+          f.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+          g.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+          h.push(moment(temp.data[i].created_at).format("HH:mm:ss"))
+
           a.push(temp.data[i].suhu_air)
           b.push(temp.data[i].ph_air)
           c.push(temp.data[i].intensitas_cahaya)
@@ -608,6 +682,7 @@
           f.push(temp.data[i].kecepatan_air)
           g.push(temp.data[i].kelembapan_udara)
           h.push(temp.data[i].suhu_udara)
+          
           app.graph_suhu_air.push(a)
           app.graph_ph_air.push(b)
           app.graph_intensitas.push(c)
@@ -696,6 +771,29 @@
            min_suhu_udara = x.data[j].suhu_udara
           }
         }
+
+        var sum_suhu_air = 0; var sum_ph = 0; var sum_intensitas = 0; var sum_ketinggian = 0;
+        var sum_kekeruhan = 0; var sum_kecepatan = 0; var sum_kelembapan = 0; var sum_suhu_udara = 0;
+        for (let k = 0; k < x.data.length; k++) {
+          sum_suhu_air = sum_suhu_air + x.data[k].suhu_air
+          sum_ph = sum_ph + x.data[k].ph_air
+          sum_intensitas = sum_intensitas + x.data[k].intensitas_cahaya
+          sum_ketinggian = sum_ketinggian + x.data[k].ketinggian_air
+          sum_kekeruhan = sum_kekeruhan + x.data[k].kekeruhan
+          sum_kecepatan = sum_kecepatan + x.data[k].kecepatan_air
+          sum_kelembapan = sum_kelembapan + x.data[k].kelembapan_udara
+          sum_suhu_udara = sum_suhu_udara + x.data[k].suhu_udara
+        }
+
+        // rata-rata
+        app.suhu_air_ratarata = (sum_suhu_air/x.data.length).toFixed(2)
+        app.ph_ratarata = (sum_ph/x.data.length).toFixed(2)
+        app.intensitas_ratarata = (sum_intensitas/x.data.length).toFixed(2)
+        app.ketinggian_ratarata = (sum_ketinggian/x.data.length).toFixed(2)
+        app.kekeruhan_ratarata = (sum_kekeruhan/x.data.length).toFixed(2)
+        app.kecepatan_ratarata = (sum_kecepatan/x.data.length).toFixed(2)
+        app.kelembapan_ratarata = (sum_kelembapan/x.data.length).toFixed(2)
+        app.suhu_udara_ratarata = (sum_suhu_udara/x.data.length).toFixed(2)
         
         // data tertinggi
         app.suhu_air_tertinggi = max_suhu_air
@@ -754,3 +852,4 @@
   }
  }
  </script>
+ 

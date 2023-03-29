@@ -2,7 +2,8 @@
   <div class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="#"><b>Smart Algae Pond</b></a>
+    <b-img src="../assets/SBRC.png" fluid alt="Responsive image"></b-img>
+    <b>Smart Algae Pond</b>
   </div>
   <!-- /.login-logo -->
   <div class="card">
