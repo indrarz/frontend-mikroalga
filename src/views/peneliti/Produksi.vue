@@ -416,7 +416,12 @@ export default {
         const vol = dataKolams.data.data.volume_kolam
         try {
           if (addData.volume_produksi > vol) {
-            this.addbesar();
+            this.$bvToast.toast(`Volume Produksi Melebihi Kapasitas Kolam yaitu ${vol} L`, {
+              title: 'Notifikasi',
+              variant: 'danger',
+              solid: true
+            })
+            // this.addbesar();
           } else {
             await axios.post(addUrl, addData, {headers: getHeader()});
             this.addsukses(); 

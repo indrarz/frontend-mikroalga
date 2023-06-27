@@ -30,11 +30,25 @@
                     <div class="small-box">
                       <!-- Header -->
                       <div class="card-body">
-                        <h5 class="font-weight-bold">Jumlah Spesies Mikroalga</h5>
-                        <pie-chart :data="graph_mikroalga"></pie-chart>
+                        <h5 class="font-weight-bold">Data Mikroalga</h5>
+                        <br/>
+                        <table id="example2" class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th>Nama Spesies Mikroalga</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(mikroalga) in mikroalga.data" :key="mikroalga.id">
+                              <td>{{mikroalga.nama_spesies}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- <pie-chart :data="graph_mikroalga"></pie-chart> -->
                         <br/>
                           <div class="col-sm-12">
                           <!-- Info -->
+                              <h6 class="col-sm-12">Total</h6>
                               <h5 class="col-sm-12 font-weight-bold">{{jumlah_mikroalga}} Spesies</h5>
                           </div>
                       </div>
@@ -48,11 +62,27 @@
                     <div class="small-box">
                       <!-- Header -->
                       <div class="card-body">
-                        <h5 class="font-weight-bold">Jumlah Kolam</h5>
-                        <pie-chart :data="graph_kolam"></pie-chart>
+                        <h5 class="font-weight-bold">Data Kolam</h5>
+                        <br/>
+                        <table id="example2" class="table table-bordered table-hover">
+                          <thead>
+                            <tr>
+                              <th>Nama Kolam</th>
+                              <th>Volume Kolam (L)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(kolam) in kolam.data" :key="kolam.id">
+                              <td>{{kolam.nama_kolam}}</td>
+                              <td>{{kolam.volume_kolam}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- <pie-chart :data="graph_kolam"></pie-chart> -->
                         <br/>
                           <div class="col-sm-12">
                           <!-- Info -->
+                              <h6 class="col-sm-12">Total</h6>
                               <h5 class="col-sm-12 font-weight-bold">{{jumlah_kolam}} Kolam</h5>
                           </div>
                       </div>
@@ -139,6 +169,82 @@
   // },
  
   methods: {
+    next: function(){
+        var app = this
+        var nextUrl = app.data.next_page_url
+        app.data = []
+        axios.get(nextUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            if(app.current_page == app.data.last_page){
+              app.hidelast = true
+            }
+            else{
+              app.hidefirst = false
+            }
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      last: function(){
+        var app = this
+        var lastUrl = app.data.last_page_url
+        app.data = []
+        axios.get(lastUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            app.hidelast = true
+            app.hidefirst = false
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      prev: function(){
+        var app = this
+        var prevUrl = app.data.prev_page_url
+        app.data = []
+        axios.get(prevUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            if(app.current_page == 1){
+              app.hidefirst = true
+            }
+            else{
+              app.hidelast = false
+            }
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
+      first: function(){
+        var app = this
+        var firstUrl = app.data.first_page_url
+        app.data = []
+        axios.get(firstUrl, {headers: getHeader()})
+            .then(function (response) {
+            app.prod = response.data.data;
+            //console.log(app.data.next_page_url)
+            app.last_page = app.data.last_page
+            app.current_page = app.data.current_page
+            app.hidefirst = true
+            app.hidelast = false
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        });
+      },
     // chart
     getUser: function(){
       var app = this;
@@ -165,29 +271,60 @@
 
     getMikroalga: function(){
       var app = this;
+      app.row = [];
       axios.get(mikroalgaUrl, {headers: getHeader()})
       .then(function(response){
         app.mikroalga=response.data.data;
         app.jumlah_mikroalga=app.mikroalga.data.length;
-        //console.log(app.mikroalga)
-        var temp = []
-        temp = response.data.data;
-        for (let i = 0; i < temp.data.length; i++) {
-          var a = []; var x = 0;
-          a.push(temp.data[i].nama_spesies)
-          x++
-          a.push(x)
-          app.graph_mikroalga.push(a)
+        app.current_page = response.data.data.current_page
+        app.last_page = response.data.data.last_page
+        if(app.current_page != app.last_page){ 
+          app.hidelast = false
         }
+        //console.log(app.mikroalga)
+        for (let index = 0; index < app.mikroalga.data.length; index++) {
+          if(app.mikroalga.data[index].deleted_at == null){
+            app.row.push(0)
+          }
+          else{
+            app.row.push(1)
+          }
+        }
+        // var temp = []
+        // temp = response.data.data;
+        // for (let i = 0; i < temp.data.length; i++) {
+        //   var a = []; var x = 0;
+        //   a.push(temp.data[i].nama_spesies)
+        //   x++
+        //   a.push(x)
+        //   app.graph_mikroalga.push(a)
+        // }
       })
+      .catch(function (error) {
+            console.log(error.message);
+        });
     },
 
     getKolam: function(){
       var app = this;
+      app.row = [];
       axios.get(kolamUrl, {headers: getHeader()})
       .then(function(response){
         app.kolam=response.data.data;
         app.jumlah_kolam=app.kolam.data.length;
+        app.current_page = response.data.data.current_page
+        app.last_page = response.data.data.last_page
+        if(app.current_page != app.last_page){ 
+          app.hidelast = false
+        }
+        for (let index = 0; index < app.kolam.data.length; index++) {
+          if(app.kolam.data[index].deleted_at == null){
+            app.row.push(0)
+          }
+          else{
+            app.row.push(1)
+          }
+        }
         //console.log(app.kolam)
         var temp = []
         temp = response.data.data;

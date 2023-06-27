@@ -123,7 +123,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{suhu_air_terendah}} °C</dd>
@@ -132,7 +132,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{suhu_air_ratarata}} °C</dd>
@@ -141,7 +141,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{suhu_air_tertinggi}} °C</dd>
@@ -162,7 +162,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{ph_terendah}} pH</dd>
@@ -171,7 +171,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{ph_ratarata}} pH</dd>
@@ -180,7 +180,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{ph_tertinggi}} pH</dd>
@@ -201,7 +201,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{intensitas_terendah}} Lux</dd>
@@ -210,7 +210,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{intensitas_ratarata}} Lux</dd>
@@ -219,7 +219,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{intensitas_tertinggi}} Lux</dd>
@@ -240,7 +240,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{ketinggian_terendah}} MDPL</dd>
@@ -249,7 +249,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{ketinggian_ratarata}} MDPL</dd>
@@ -258,7 +258,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{ketinggian_tertinggi}} MDPL</dd>
@@ -279,7 +279,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{kekeruhan_terendah}} NTU</dd>
@@ -288,7 +288,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{kekeruhan_ratarata}} NTU</dd>
@@ -297,7 +297,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{kekeruhan_tertinggi}} NTU</dd>
@@ -318,7 +318,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{kecepatan_terendah}} cm/s</dd>
@@ -327,7 +327,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{kecepatan_ratarata}} cm/s</dd>
@@ -336,7 +336,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{kecepatan_tertinggi}} cm/s</dd>
@@ -357,7 +357,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{kelembapan_terendah}}</dd>
@@ -366,7 +366,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{kelembapan_ratarata}}</dd>
@@ -375,7 +375,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{kelembapan_tertinggi}}</dd>
@@ -396,7 +396,7 @@
                              <dl class="row">
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-warning">
+                                 <div class="small-box bg-success">
                                    <div class="inner">
                                      <dt class="col-sm">Terendah</dt>
                                      <dd class="col-sm">{{suhu_udara_terendah}} °C</dd>
@@ -405,7 +405,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-info">
+                                 <div class="small-box bg-warning">
                                    <div class="inner">
                                      <dt class="col-sm">Rata-rata</dt>
                                      <dd class="col-sm">{{suhu_udara_ratarata}} °C</dd>
@@ -414,7 +414,7 @@
                                </div>
                                <div class="col-sm-4">
                                <!-- small box -->
-                                 <div class="small-box bg-success">
+                                 <div class="small-box bg-danger">
                                    <div class="inner">
                                      <dt class="col-sm">Tertinggi</dt>
                                      <dd class="col-sm">{{suhu_udara_tertinggi}} °C</dd>
