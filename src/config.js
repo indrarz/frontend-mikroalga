@@ -1,4 +1,4 @@
-export const apiDomain = 'http://117.53.47.76/backend-mikroalga/'
+export const apiDomain = 'http://117.53.47.76/backend-mikroalga/public/'
 //export const apiDomain = 'http://127.0.0.1:8000/'
 export const loginUrl = apiDomain + 'api/auth/login'
 export const userUrl = apiDomain + 'api/auth/me'
