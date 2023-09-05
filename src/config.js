@@ -1,4 +1,4 @@
-export const apiDomain = 'backend-mikroalga.vercel.app/public/'
+export const apiDomain = 'backend-mikroalga.vercel.app'
 //export const apiDomain = 'http://127.0.0.1:8000/'
 export const loginUrl = apiDomain + 'api/auth/login'
 export const userUrl = apiDomain + 'api/auth/me'
